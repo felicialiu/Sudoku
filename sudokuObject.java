@@ -21,8 +21,10 @@ public class sudokuObject{
 	{
 		this.value = value;
 		this.block = block;
-		for(int i = 1; i < 10; i++){
-			options.add(i);
+		if(value == 0){
+			for(int i = 1; i < 10; i++){
+				this.options.add(i);
+			}
 		}
 	}
 
