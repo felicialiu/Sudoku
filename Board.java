@@ -1,36 +1,33 @@
 import java.util.*;
 import java.io.*;
 
-public class sudokuBoard{
+public class Board {
 
-	//Er moet nog een setboard method in die alle 3 de 2d arrays veranderd!!
+	//Er moet nog een setboard method in die alle 3 de 2d arrays verandert!!
 
-	//2d array for rows
-	private sudokuObject[][] rows = new sudokuObject[9][9];
-
-	//2d array for columns
-	private sudokuObject[][] columns = new sudokuObject[9][9];
-
-	//2d array for blocks
-	private sudokuObject[][] blocks = new sudokuObject[9][9];
+	private Entry[][] rows = new Entry[9][9];
+	private Entry[][] columns = new Entry[9][9];
+	private Entry[][] blocks = new Entry[9][9];
 
 	private int count = 0;
 	private int rowcount = 0;
 
 	public static void main(String[] args)
 	{
-		sudokuBoard test = new sudokuBoard();
+		Board test = new Board();
+		/*for(int j = 0; j < 9; j++ ){
+			System.out.println(test.blocks[3][j].getValue());
+		}*/
 	} 
 
-	public sudokuBoard(){
-		try{
-
+	public sudokuBoard() {
+		try {
 			BufferedReader sudokuReader = new BufferedReader(new FileReader("easySudoku.txt"));
 			String oneSudoku = sudokuReader.readLine();//This is one sudoku
 
 			//This adds all the objects to the row and column arrays
 			for(int i = 0; i < oneSudoku.length(); i++){
-				sudokuObject object = new sudokuObject(Character.getNumericValue(oneSudoku.charAt(i)));
+				Entry object = new Entry(Character.getNumericValue(oneSudoku.charAt(i)));
 				if(count == 9){
 					rowcount++;
 					count = 0;
@@ -65,18 +62,15 @@ public class sudokuBoard{
 	        }
 		}
 
-	//this returns a specified row
-	public sudokuObject[] getRow(int row){
+	public Entry[] getRow(int row){
 		return rows[row];
 	}
 
-	//this returns a specified column
-	public sudokuObject[] getColumn(int column){
+	public Entry[] getColumn(int column){
 		return columns[column];
 	}
 
-	//this returns a specified block
-	public sudokuObject[] getBlock(int block){
+	public Entry[] getBlock(int block){
 		return blocks[block];
 	}
 }
