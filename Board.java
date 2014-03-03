@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Board {
 
-	//Er moet nog een setboard method in die alle 3 de 2d arrays verandert!!
+	// Er moet nog een setboard method in die alle 3 de 2d arrays verandert!!
 
 	private Entry[][] rows = new Entry[9][9];
 	private Entry[][] columns = new Entry[9][9];
@@ -14,12 +14,21 @@ public class Board {
 	public static void main(String[] args)
 	{
 		Board test = new Board();
-		/*for(int j = 0; j < 9; j++ ){
+		/*
+		for(int j = 0; j < 9; j++ ){
 			System.out.println(test.blocks[3][j].getValue());
-		}*/
+		}
+		*/
 	} 
 
-	public sudokuBoard() {
+	// Constructor that creates a sudokuBoard representation from String
+	public Board(String sudoku) {
+		/* do something */
+	}
+
+	// Constructor that creates a sudokuBoard representation from reading in
+	// the textfile easySudoku.txt
+	public Board() {
 		try {
 			BufferedReader sudokuReader = new BufferedReader(new FileReader("easySudoku.txt"));
 			String oneSudoku = sudokuReader.readLine();
@@ -64,14 +73,26 @@ public class Board {
 	        }
 		}
 
+	// Sets a value in a specific row/column/block to newValue
+	public void setBoard(int row, int column, int block, int newValue) {
+		/* set row value */
+
+		/* set column value */
+
+		/* set block value */
+	}
+
+	// Returns the row at index row
 	public Entry[] getRow(int row){
 		return rows[row];
 	}
 
+	// Returns the column at index column
 	public Entry[] getColumn(int column){
 		return columns[column];
 	}
 
+	// Returns the block at index block
 	public Entry[] getBlock(int block){
 		return blocks[block];
 	}
