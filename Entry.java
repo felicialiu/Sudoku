@@ -1,7 +1,8 @@
 import java.util.*;
 
-public class sudokuObject{
+public class Entry {
 
+	// 
 	private int value = 0;
 
 	//private int block = 0;
@@ -18,7 +19,7 @@ public class sudokuObject{
 	}
 
 	// The constructor for creating the sudoku object
-	public sudokuObject(int value)
+	public Entry(int value)
 	{
 		this.value = value;
 		//this.block = block;
