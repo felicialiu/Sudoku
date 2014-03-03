@@ -3,42 +3,36 @@ import java.io.*;
 
 public class sudoku{
 
-	private sudokuObject[][] board = new sudokuObject[9][9];
-	private int count = 1; 
-
 	public static void main(String[] args)
 	{
-		sudoku test = new sudoku();
-		test.readSudoku();
+		sudokuBoard test = new sudokuBoard();
+		drawSudoku(test);
+
 	}
 
-	public sudoku()
-	{
-		
-	}
 
-	public void readSudoku(){
-		try{
-			BufferedReader sudokuReader = new BufferedReader(new FileReader("easySudoku.txt"));
-			String oneSudoku = sudokuReader.readLine();
-			int i = 0;
-			System.out.println(oneSudoku.charAt(i));
-			
-			while(oneSudoku.charAt(i) != '')
-			{
-				sudokuObject object = new sudokuObject(Character.getNumericValue(oneSudoku.charAt(i)), i);
-				i++;
-				if(i >= 9){
-					i = 1;
-					count++;
-				}
-				board[count][i] = object;
-
+	static void drawSudoku(sudokuBoard board){
+		System.out.println("-------------");
+		for(int i = 0; i < 9;i++){
+			sudokuObject currentRow[] = board.getRow(i);
+			System.out.print("|");
+			System.out.print(currentRow[0].getValue());
+			System.out.print(currentRow[1].getValue());
+			System.out.print(currentRow[2].getValue());
+			System.out.print("|");
+			System.out.print(currentRow[3].getValue());
+			System.out.print(currentRow[4].getValue());
+			System.out.print(currentRow[5].getValue());
+			System.out.print("|");
+			System.out.print(currentRow[6].getValue());
+			System.out.print(currentRow[7].getValue());
+			System.out.print(currentRow[8].getValue());
+			System.out.println("|");
+			if(i == 2 || i == 5){
+				System.out.println("-------------");
 			}
-
-			System.out.println(oneSudoku);
-		} catch (IOException e) {
-            e.printStackTrace();
-        }
+		}
+		System.out.println("-------------");
 	}
+	
 }

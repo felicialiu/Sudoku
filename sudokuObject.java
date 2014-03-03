@@ -4,23 +4,24 @@ public class sudokuObject{
 
 	private int value = 0;
 
-	private int block = 0;
+	//private int block = 0;
 
 	private ArrayList<Integer> options = new ArrayList<Integer>();
 
 	public static void main(String[] args)
 	{
-		sudokuObject test = new sudokuObject(0, 3);
-		System.out.println(test.options.get(4));
+		sudokuObject test = new sudokuObject(6);
+		test.removeOption(4);
+		//System.out.println(test.options.get(4));
 		System.out.println(test.getValue());
-		System.out.println(test.getBlock());
+		//System.out.println(test.getBlock());
 	}
 
 	// The constructor for creating the sudoku object
-	public sudokuObject(int value, int block)
+	public sudokuObject(int value)
 	{
 		this.value = value;
-		this.block = block;
+		//this.block = block;
 		if(value == 0){
 			for(int i = 1; i < 10; i++){
 				this.options.add(i);
@@ -40,6 +41,7 @@ public class sudokuObject{
 		this.value = value;
 	}
 
+/*
 	// Returns the block
 	public int getBlock()
 	{
@@ -54,7 +56,7 @@ public class sudokuObject{
 	public void setBlock(){
 		this.block = block;
 	}
-
+*/	
 	public ArrayList getOptions(){
 		return this.options;
 	}
