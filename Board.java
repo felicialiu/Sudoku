@@ -3,18 +3,19 @@ import java.io.*;
 
 public class Board {
 
-	// Er moet nog een setboard method in die alle 3 de 2d arrays verandert!!
-
 	private Entry[][] rows = new Entry[9][9];
 	private Entry[][] columns = new Entry[9][9];
 	private Entry[][] blocks = new Entry[9][9];
 
-	private int count = 0;
-	private int rowcount = 0;
+	// This is the index in the block
+	private static int blockplace = 0;
 
 	public static void main(String[] args)
 	{
 		Board test = new Board();
+		test.setBoard(0,1,0,6);
+		Entry[] current = test.getBlock(0);
+		System.out.println(current[1].getValue());
 		/*
 		for(int j = 0; j < 9; j++ ){
 			System.out.println(test.blocks[3][j].getValue());
@@ -31,6 +32,10 @@ public class Board {
 	// the textfile easySudoku.txt
 	public Board() {
 		try {
+			int blockindex = 0;
+			int block = 0;
+			int count = 0;
+			int rowcount = 0;
 			BufferedReader sudokuReader = new BufferedReader(new FileReader("easySudoku.txt"));
 			String oneSudoku = sudokuReader.readLine();//This is one sudoku
 
@@ -47,8 +52,6 @@ public class Board {
 			}
 
 			//This adds blocks to the blocks array using the just created row array
-			int blockindex = 0;
-			int block = 0;
 			for(int i = 0; i < 9; i++){
 				blocks[block][blockindex] = rows[i][0];
 				blocks[block][blockindex+1] = rows[i][1];
@@ -74,10 +77,14 @@ public class Board {
 	// Sets a value in a specific row/column/block to newValue
 	public void setBoard(int row, int column, int block, int newValue) {
 		/* set row value */
+		rows[row][column].setValue(newValue);
 
 		/* set column value */
+		columns[column][row].setValue(newValue);
 
 		/* set block value */
+		calcBlockIndex(row, column);
+		blocks[block][blockplace].setValue(newValue);
 	}
 
 	// Returns the row at index row
@@ -93,5 +100,36 @@ public class Board {
 	// Returns the block at index block
 	public Entry[] getBlock(int block){
 		return blocks[block];
+	}
+
+	//Calculates the index of the object in the block
+	static void calcBlockIndex(int row, int column){
+		blockplace = column;
+		//Rows 0,3 and 6 contains all the first 3 objects in the blocks, meaning index is always 0,1 or 2
+		if(row == 0|| row == 3|| row == 6){
+			if(column > 2){
+				blockplace -= 3;
+			}else if(column > 5){
+				blockplace -= 6;
+			}
+		}
+
+		//Rows 1,4 and 7 contains all the middle 3 objects in the blocks, meaning index is always 3,4 or 5
+		else if(row == 1 || row == 4|| row == 7){
+			if(column < 3){
+				blockplace += 3;
+			}else if(column > 5){
+				blockplace -= 3;
+			}
+		}
+
+		//Rows 2,5 and 8 contains all the last 3 objects in the blocks, meaning index is always 6,7 or 8
+		else if(row ==2 || row == 5|| row == 8){
+			if(column < 3){
+				blockplace += 6;
+			}else if(column < 5){
+				blockplace += 3;
+			}
+		}
 	}
 }
