@@ -17,7 +17,7 @@ public class sudokuObject{
 		//System.out.println(test.getBlock());
 	}
 
-	// The constructor for creating the sudoku object
+	// The constructor for creating the sudoku object with the number from the sudoku
 	public sudokuObject(int value)
 	{
 		this.value = value;
@@ -57,10 +57,13 @@ public class sudokuObject{
 		this.block = block;
 	}
 */	
+
+	//returns the arraylist options
 	public ArrayList getOptions(){
 		return this.options;
 	}
 
+	//removes the specified option
 	public void removeOption(int number){
 		for(int i = 0; i < options.size(); i++){
 			if(number == options.get(i)){
