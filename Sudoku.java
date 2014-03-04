@@ -38,22 +38,34 @@ public class Sudoku{
 	}
 
 	static void solve(Board board){
-		Entry[] currentRow = board.getRow(0);
-		Entry[] currentColumn = board.getColumn(0);
-		int count = 0;
-		int columnCount = 0;
-		int rowCount = 0;
-		while(count < 9){
-			for(int i = 0; i < 9; i++){
-				if(currentRow[i].getValue() != 0){
-					board.removeBoardOption(count,i,0,currentRow[i].getValue();
+		int checkCount = 0;
+		boolean check = false;
+		while(check == false){
+			int count = 0;
+			int columnCount = 0;
+			int rowCount = -1;
+			while(count < 81){
+				if(count % 9 == 0){
+					rowCount++;
+					columnCount = 0;
 				}
-				if(currentColumn[i].getValue() != 0){
-					board.removeBoardOption(i,count,0,currentRow[i].getValue();
+				Entry[] currentRow = board.getRow(rowCount);
+				Entry[] currentColumn = board.getColumn(columnCount);
+				for(int i = 0; i < 9; i++){
+					if(currentRow[i].getValue() != 0){
+						board.removeBoardOption(rowCount,columnCount,0,currentRow[i].getValue());
+					}
+					if(currentColumn[i].getValue() != 0){
+						board.removeBoardOption(rowCount,columnCount,0,currentColumn[i].getValue());
+					}
 				}
+				count++;
+				columnCount++;
 			}
-			rowCount++;
-			count++;
+		checkCount++;
+		if(checkCount == 15){
+			check = true;
+		}
 		}
 	}
 	

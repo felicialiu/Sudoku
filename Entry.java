@@ -63,8 +63,10 @@ public class Entry {
 		// If there is only one option left, it must be the value of the Entry
 		if(options.size() == 1){
 			this.value = options.get(0);
+			//System.out.println(options.get(0));
 		}
 	}
+}
 
 /*
 	// Returns the block
