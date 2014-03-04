@@ -77,27 +77,42 @@ public class Board {
 	        }
 		}
 
+	// This method goes through the entire board and checks if there are still objects with the value 0
+	// meaning the sudoku is not completely 
+	public boolean checkBoard(Board board){
+		for(int i = 0; i < 9; i++){
+			Entry[] currentRow = board.getRow(i);
+			for(int j = 0; j < 9; j++){
+				if(currentRow[j].getValue() == 0){
+					return false;
+				} 
+			}
+		}
+		return true;
+	}
+
 	// Sets a value in a specific row/column/block to newValue
 	public void setBoard(int row, int column, int block, int newValue) {
-		/* set row value */
+		// set row value 
 		rows[row][column].setValue(newValue);
 
-		/* set column value */
+		// set column value 
 		columns[column][row].setValue(newValue);
 
-		/* set block value */
+		// set block value 
 		calcBlockIndex(row, column);
 		blocks[block][blockplace].setValue(newValue);
 	}
 
 	// removes an options from an object in the specific row/column/block
 	public void removeBoardOption(int row, int column, int block, int option){
+		// removes row option 
 		rows[row][column].removeOption(option);
 
-		/* set column value */
+		// removes column option 
 		columns[column][row].removeOption(option);
 
-		/* set block value */
+		// removes block option 
 		calcBlockIndex(row, column);
 		blocks[block][blockplace].removeOption(option);
 	}
