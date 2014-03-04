@@ -1,16 +1,18 @@
 import java.util.*;
 import java.io.*;
 
-public class Sudoku {
+public class Sudoku{
 
 	public static void main(String[] args)
 	{
 		Board test = new Board();
 		drawSudoku(test);
+		solve(test);
+		drawSudoku(test);
 
 	}
 
-	// Returns the current representation of the sudoku
+
 	static void drawSudoku(Board board){
 		System.out.println("-------------");
 		for(int i = 0; i < 9;i++){
@@ -33,5 +35,26 @@ public class Sudoku {
 			}
 		}
 		System.out.println("-------------");
-	}	
+	}
+
+	static void solve(Board board){
+		Entry[] currentRow = board.getRow(0);
+		Entry[] currentColumn = board.getColumn(0);
+		int count = 0;
+		int columnCount = 0;
+		int rowCount = 0;
+		while(count < 9){
+			for(int i = 0; i < 9; i++){
+				if(currentRow[i].getValue() != 0){
+					board.removeBoardOption(count,i,0,currentRow[i].getValue();
+				}
+				if(currentColumn[i].getValue() != 0){
+					board.removeBoardOption(i,count,0,currentRow[i].getValue();
+				}
+			}
+			rowCount++;
+			count++;
+		}
+	}
+	
 }

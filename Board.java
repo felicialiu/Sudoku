@@ -12,11 +12,14 @@ public class Board {
 
 	public static void main(String[] args)
 	{
+		/*
 		Board test = new Board();
 		test.setBoard(0,1,0,6);
 		Entry[] current = test.getBlock(0);
-		System.out.println(current[1].getValue());
-		/*
+		System.out.println(current[0].getOptions().get(5));
+		test.removeBoardOption(0,0,0,6);
+		System.out.println(current[0].getOptions().get(5));
+		
 		for(int j = 0; j < 9; j++ ){
 			System.out.println(test.blocks[3][j].getValue());
 		}
@@ -85,6 +88,18 @@ public class Board {
 		/* set block value */
 		calcBlockIndex(row, column);
 		blocks[block][blockplace].setValue(newValue);
+	}
+
+	// removes an options from an object in the specific row/column/block
+	public void removeBoardOption(int row, int column, int block, int option){
+		rows[row][column].removeOption(option);
+
+		/* set column value */
+		columns[column][row].removeOption(option);
+
+		/* set block value */
+		calcBlockIndex(row, column);
+		blocks[block][blockplace].removeOption(option);
 	}
 
 	// Returns the row at index row
