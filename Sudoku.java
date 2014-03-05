@@ -16,21 +16,15 @@ public class Sudoku{
 	static void drawSudoku(Board board){
 		System.out.println("-------------");
 
-		// This loop draws one row
+		// This loop draws a row per iteration
 		for(int i = 0; i < 9;i++){
 			Entry currentRow[] = board.getRow(i);
-			System.out.print("|");
-			System.out.print(currentRow[0].getValue());
-			System.out.print(currentRow[1].getValue());
-			System.out.print(currentRow[2].getValue());
-			System.out.print("|");
-			System.out.print(currentRow[3].getValue());
-			System.out.print(currentRow[4].getValue());
-			System.out.print(currentRow[5].getValue());
-			System.out.print("|");
-			System.out.print(currentRow[6].getValue());
-			System.out.print(currentRow[7].getValue());
-			System.out.print(currentRow[8].getValue());
+			for(int j = 0; j < 9; j++) {
+				if(j % 3 == 0) {
+					System.out.print("|");
+				}
+				System.out.print(currentRow[j].getValue());
+			}
 			System.out.println("|");
 			if(i == 2 || i == 5){
 				System.out.println("-------------");
@@ -39,20 +33,22 @@ public class Sudoku{
 		System.out.println("-------------");
 	}
 
+/* TO DO: Felicia: code netter maken, while loop fixen */
 	// This is the solve method which solves the specified sudoku
 	static void solve(Board board){
-		int checkCount = 0;
 		boolean check = false;
 		// This checks if the the sudoku has been solved
 		while(check == false){
 			check = board.checkBoard(board);
-			int count = 0;
+			// Keeps track 
 			int columnCount = 0;
 			int rowCount = -1;
 			// It checks all 81 objects if one of the values can be found
-			while(count < 81){
-				// If count % 9 is 0, it means that the end of a row has been reached and the 
-				// next row should be found and should start at column 0
+
+			for(int count = 0; count < 81; count++) {
+				// If count % 9 is 0, it means that the end of a row has been 
+				// reached and the next row should be found and should start 
+				// at column 0
 				if(count % 9 == 0){
 					rowCount++;
 					columnCount = 0;
@@ -63,20 +59,24 @@ public class Sudoku{
 				// This is an array that holds the current column
 				Entry[] currentColumn = board.getColumn(columnCount);
 
-				// This checks if there are any values in the row or column that can be taken out 
-				// of the options of the current object 
+				// Checks if there are any values in the row or column that can 
+				// removed from the options of the current object 
 				for(int i = 0; i < 9; i++){
-					// This removes the option from the object if value is not zero of a specified object in the row
+					// Removes a specific value from "options" from an Entry if
+					// that value has been found in the same row
 					if(currentRow[i].getValue() != 0){
-						board.removeBoardOption(rowCount,columnCount,0,currentRow[i].getValue());
+						board.removeBoardOption(rowCount, columnCount, 
+												0, currentRow[i].getValue());
 					}
 
-					// This removes the option from the object if value is not zero of a specified object in the column
+					// Does the same for an Entry in a column
 					if(currentColumn[i].getValue() != 0){
-						board.removeBoardOption(rowCount,columnCount,0,currentColumn[i].getValue());
+						board.removeBoardOption(rowCount, columnCount,
+												0, currentColumn[i].getValue());
 					}
+
+					/* MISSING: removing values from options of a block */
 				}
-				count++;
 				columnCount++;
 			}
 		}

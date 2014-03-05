@@ -5,9 +5,6 @@ public class Entry {
 	// Current (or default) value for an entry in a sudoku
 	private int value = 0;
 
-	// Indicates to which block (3x3 field) the Entry belongs
-	// private int block = 0;
-
 	// Entry options (still) possible
 	private ArrayList<Integer> options = new ArrayList<Integer>();
 
@@ -23,7 +20,7 @@ public class Entry {
 		*/
 	}
 
-	// The constructor for creating the sudoku Entry
+	// The constructor for creating a sudoku Entry
 	public Entry(int value)
 	{
 		this.value = value;

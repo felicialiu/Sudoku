@@ -7,11 +7,7 @@ public class Board {
 	private Entry[][] columns = new Entry[9][9];
 	private Entry[][] blocks = new Entry[9][9];
 
-	// This is the index in the block
-	private static int blockplace = 0;
-
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		/*
 		Board test = new Board();
 		test.setBoard(0,1,0,6);
@@ -33,6 +29,7 @@ public class Board {
 
 	// Constructor that creates a sudokuBoard representation from reading in
 	// the textfile easySudoku.txt
+/* TO DO: Jonas - use methods to make Board() constructor more readable */
 	public Board() {
 		try {
 			int blockindex = 0;
@@ -77,8 +74,8 @@ public class Board {
 	        }
 		}
 
-	// This method goes through the entire board and checks if there are still objects with the value 0
-	// meaning the sudoku is not completely 
+	// This method loops through the entire board and checks if there are still
+	// Entries with value 0; meaning the sudoku is not solved yet 
 	public boolean checkBoard(Board board){
 		for(int i = 0; i < 9; i++){
 			Entry[] currentRow = board.getRow(i);
@@ -93,28 +90,28 @@ public class Board {
 
 	// Sets a value in a specific row/column/block to newValue
 	public void setBoard(int row, int column, int block, int newValue) {
-		// set row value 
+		// Set row value 
 		rows[row][column].setValue(newValue);
 
-		// set column value 
+		// Set column value 
 		columns[column][row].setValue(newValue);
 
-		// set block value 
-		calcBlockIndex(row, column);
-		blocks[block][blockplace].setValue(newValue);
+		// Set block value 
+		int index = calcBlockIndex(row, column);
+		blocks[block][index].setValue(newValue);
 	}
 
-	// removes an options from an object in the specific row/column/block
+	// Removes an option from an Entry in a given row/column/block
 	public void removeBoardOption(int row, int column, int block, int option){
-		// removes row option 
+		// Removes row option 
 		rows[row][column].removeOption(option);
 
-		// removes column option 
+		// Removes column option 
 		columns[column][row].removeOption(option);
 
-		// removes block option 
-		calcBlockIndex(row, column);
-		blocks[block][blockplace].removeOption(option);
+		// Removes block option 
+		int index = calcBlockIndex(row, column);
+		blocks[block][index].removeOption(option);
 	}
 
 	// Returns the row at index row
@@ -132,34 +129,40 @@ public class Board {
 		return blocks[block];
 	}
 
-	//Calculates the index of the object in the block
-	static void calcBlockIndex(int row, int column){
-		blockplace = column;
-		//Rows 0,3 and 6 contains all the first 3 objects in the blocks, meaning index is always 0,1 or 2
-		if(row == 0|| row == 3|| row == 6){
+	// Calculates the index of an Entry in a block, given location specified
+	// by row and column
+	static int calcBlockIndex(int row, int column){
+		int blockplace = column;
+		
+		// Rows 0, 3 and 6 contains all the first 3 objects in the blocks, 
+		// meaning index is always 0, 1 or 2
+		if(row % 3 == 0) {
 			if(column > 2){
 				blockplace -= 3;
-			}else if(column > 5){
+			} else if(column > 5){
 				blockplace -= 6;
 			}
 		}
 
-		//Rows 1,4 and 7 contains all the middle 3 objects in the blocks, meaning index is always 3,4 or 5
-		else if(row == 1 || row == 4|| row == 7){
+		// Rows 1, 4 and 7 contains all the middle 3 objects in the blocks, 
+		// meaning index is always 3, 4 or 5
+		else if(row - 1 % 3 == 0) {
 			if(column < 3){
 				blockplace += 3;
-			}else if(column > 5){
+			} else if(column > 5){
 				blockplace -= 3;
 			}
 		}
 
-		//Rows 2,5 and 8 contains all the last 3 objects in the blocks, meaning index is always 6,7 or 8
-		else if(row ==2 || row == 5|| row == 8){
+		// Rows 2, 5 and 8 contains all the last 3 objects in the blocks, 
+		// meaning index is always 6, 7 or 8
+		else if(row - 2 % 3 == 0) {
 			if(column < 3){
 				blockplace += 6;
-			}else if(column < 5){
+			} else if(column < 5){
 				blockplace += 3;
 			}
 		}
+		return blockplace;
 	}
 }
