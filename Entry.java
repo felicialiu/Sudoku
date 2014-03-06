@@ -6,6 +6,7 @@ public class Entry {
 	private int value = 0;
 
 	// Entry options (still) possible
+/* catch if options.size() == 0 */
 	private ArrayList<Integer> options = new ArrayList<Integer>();
 
 	// DONE TESTING
@@ -24,7 +25,6 @@ public class Entry {
 	public Entry(int value)
 	{
 		this.value = value;
-		// this.block = block;
 		if(value == 0){
 			for(int i = 1; i < 10; i++){
 				this.options.add(i);

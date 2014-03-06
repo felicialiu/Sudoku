@@ -3,6 +3,8 @@ import java.io.*;
 
 public class Sudoku{
 
+	/* alle sudoku's inlezen en totaalscore printen */
+
 	public static void main(String[] args)
 	{
 		Board test = new Board();
@@ -33,6 +35,8 @@ public class Sudoku{
 		System.out.println("-------------");
 	}
 
+/* manier om uit de loop te breken als geen oplossing te vinden is, boolean
+om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 /* TO DO: Felicia: code netter maken, while loop fixen */
 	// This is the solve method which solves the specified sudoku
 	static void solve(Board board){
