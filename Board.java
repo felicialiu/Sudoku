@@ -101,8 +101,30 @@ public class Board {
 		blocks[block][index].setValue(newValue);
 	}
 
-/* TO DO: Felicia: wat gebeurt er als je een option wil verwijderen die er
-niet in zit??????*/
+	// Removes an option from all the Entries in the same row/column/block
+	public void removeOptionComplete(int row, int column, int block, int option) {
+		// Remove from all Entries in the same row, and also their reference
+		// in column block
+
+		for(int n = 0; n < 9; n++) {
+			rows[row][n].removeOption(option);
+			columns[n][row].removeOption(option);
+			blocks[
+
+		}
+
+		// Remove from all Entries in the same column, and also their reference
+		// in row
+		for(int m = 0; m < 9; m++) {
+			columns[column][m].removeOption(option);
+			rows[m][column].removeOption(option);
+		}
+
+		for(int k = 0; k < 9; k++) {
+			// block
+		}
+	}
+
 	// Removes an option from an Entry in a given row/column/block
 	public void removeBoardOption(int row, int column, int block, int option){
 		// Removes row option 

@@ -47,11 +47,13 @@ public class Entry {
 	}
 
 	// Checks whether options contains only one value, and if so, sets the
-	// Sudoku cell value to that value
-	public void checkOptions() {
+	// Sudoku cell value to that value, returns true if so
+	public boolean checkOptions() {
 		if(options.size() == 1) {
 			this.value = options.get(0);
+			return true;
 		}
+		return false;
 	}
 
 	// Returns the current value of the sudoku Entry

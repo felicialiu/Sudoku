@@ -35,54 +35,164 @@ public class Sudoku{
 		System.out.println("-------------");
 	}
 
+/* Solving algorithm using Singles, Hidden Singles, and Naked Pairs */
+static void firstTrySolver(Board board){
+	// Correctly initalise options
+	initBoard(board);
+
+	// Checks whether the sudoku has been solved
+	boolean solved = board.checkBoard(board);
+	boolean changed = true;
+	while(!solved && changed){
+		changed = false;
+		int columnCount = 0;
+		int rowCount = -1;
+		
+		// Checks all 81 objects if one of the values can be assigned
+		for(int count = 0; count < 81; count++) {
+
+			// Sets the current row as the next one, and the current column
+			// back to zero in case the end of the row has been reached
+			if(count % 9 == 0){
+				rowCount++;
+				columnCount = 0;
+			}
+
+			// Current row and column
+			Entry[] currentRow = board.getRow(rowCount);
+			Entry[] currentColumn = board.getColumn(columnCount);
+
+			
+			for(int i = 0; i < 9; i++){
+				// Single
+				if(currentRow[i].checkOptions()) {
+					changed = true;
+					/* remove from row/column/block */
+				}
+				if (currentColumn[i].checkOptions()) {
+					changed = true;
+				}
+
+
+
+
+				/*
+				// Removes a specific value from "options" from an Entry if
+				// that value has been found in the same row
+				if(currentRow[i].getValue() != 0){
+					board.removeBoardOption(rowCount, columnCount, 
+											0, currentRow[i].getValue());
+				}
+
+				// Does the same for an Entry in a column
+				if(currentColumn[i].getValue() != 0){
+					board.removeBoardOption(rowCount, columnCount,
+											0, currentColumn[i].getValue());
+				}
+
+				/* MISSING: removing values from options of a block */
+
+			}
+			columnCount++;
+		}
+		check = board.checkBoard(board);
+	}
+}
+
 /* manier om uit de loop te breken als geen oplossing te vinden is, boolean
 om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
-/* TO DO: Felicia: code netter maken, while loop fixen */
 	// This is the solve method which solves the specified sudoku
 	static void solve(Board board){
-		boolean check = board.checkBoard(board);
-		// This checks if the sudoku has been solved
-		while(!check){
-			// Keeps track 
-			int columnCount = 0;
-			int rowCount = -1;
-			// It checks all 81 objects if one of the values can be found
+		// Checks whether the sudoku has been solved
+		boolean solved = board.checkBoard(board);
 
+		// Checks whether sudoku has been adjusted
+		boolean same = false;
+
+		while(!solved && !same){
+			same = true;
+			int rowIndex = -1;
+			int columnIndex = 0;
+			
+			
+			// Checks all 81 objects if one of the values can be assigned
 			for(int count = 0; count < 81; count++) {
-				// If count % 9 is 0, it means that the end of a row has been 
-				// reached and the next row should be found and should start 
-				// at column 0
+
+				// Sets the current row as the next one, and the current column
+				// back to zero in case the end of the row has been reached
 				if(count % 9 == 0){
-					rowCount++;
-					columnCount = 0;
+					rowIndex++;
+					columnIndex = 0;
 				}
-				// This is an array that holds the current row
-				Entry[] currentRow = board.getRow(rowCount);
 
-				// This is an array that holds the current column
-				Entry[] currentColumn = board.getColumn(columnCount);
+				// Current row and column
+				Entry[] currentRow = board.getRow(rowIndex);
+				Entry[] currentColumn = board.getColumn(columnIndex);
 
-				// Checks if there are any values in the row or column that can 
+				// Checks if there are any values in the row or column that can be 
 				// removed from the options of the current object 
 				for(int i = 0; i < 9; i++){
+
 					// Removes a specific value from "options" from an Entry if
 					// that value has been found in the same row
 					if(currentRow[i].getValue() != 0){
-						board.removeBoardOption(rowCount, columnCount, 
+						board.removeBoardOption(rowIndex, columnIndex, 
 												0, currentRow[i].getValue());
 					}
 
 					// Does the same for an Entry in a column
 					if(currentColumn[i].getValue() != 0){
-						board.removeBoardOption(rowCount, columnCount,
-												0, currentColumn[i].getValue());
+						board.removeBoardOption(rowIndex, columnIndex,
+											0, currentColumn[i].getValue());
 					}
 
 					/* MISSING: removing values from options of a block */
 				}
-				columnCount++;
+				columnIndex++;
 			}
-			check = board.checkBoard(board);
+			solved = board.checkBoard(board);
+		}
+	}
+
+	// Correctly initalises the possible options for all cells 
+	static void initBoard(Board board) {
+		int rowIndex = -1;
+		int columnIndex = 0;
+			
+		// Checks all 81 objects if one of the values can be assigned
+		for(int count = 0; count < 81; count++) {
+
+			// Sets the current row as the next one, and the current column
+			// back to zero in case the end of the row has been reached
+			if(count % 9 == 0){
+				rowIndex++;
+				columnIndex = 0;
+			}
+
+			// Current row and column
+			Entry[] currentRow = board.getRow(rowIndex);
+			Entry[] currentColumn = board.getColumn(columnIndex);
+
+			// Checks if there are any values in the row or column that can be 
+			// removed from the options of the current object 
+			for(int i = 0; i < 9; i++){
+
+				// Removes a specific value from "options" from an Entry if
+				// that value has been found in the same row
+				if(currentRow[i].getValue() != 0){
+					board.removeBoardOption(rowIndex, columnIndex, 
+											0, currentRow[i].getValue());
+				}
+
+				// Does the same for an Entry in a column
+				if(currentColumn[i].getValue() != 0){
+					board.removeBoardOption(rowIndex, columnIndex,
+										0, currentColumn[i].getValue());
+				}
+
+				/* MISSING: removing values from options of a block */
+			}
+			columnIndex++;
 		}
 	}	
 }
