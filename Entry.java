@@ -12,13 +12,27 @@ public class Entry {
 	// DONE TESTING
 	public static void main(String[] args)
 	{	
-		/*
-		Entry test = new Entry(6);
-		test.removeOption(4);
+		
+		Entry test = new Entry(0);
+		ArrayList options = test.getOptions(); 
+		for(int i = 0; i < options.size(); i++) {
+			System.out.println(options.get(i));
+		}
+		for(int i = 0; i < 9; i++) {
+			test.removeOption(i);
+		}
+		options = test.getOptions(); 
+		for(int i = 0; i < options.size(); i++) {
+			System.out.println(options.get(i));
+		}
+		// test.removeOption(4);
 		//System.out.println(test.options.get(4));
 		System.out.println(test.getValue());
 		//System.out.println(test.getBlock());
-		*/
+		test.checkOptions();
+		System.out.println(test.getValue());
+
+		
 	}
 
 	// The constructor for creating a sudoku Entry
@@ -29,6 +43,14 @@ public class Entry {
 			for(int i = 1; i < 10; i++){
 				this.options.add(i);
 			}
+		}
+	}
+
+	// Checks whether options contains only one value, and if so, sets the
+	// Sudoku cell value to that value
+	public void checkOptions() {
+		if(options.size() == 1) {
+			this.value = options.get(0);
 		}
 	}
 
@@ -57,11 +79,13 @@ public class Entry {
 				options.remove(i);
 			}
 		}
+		
 		// If there is only one option left, it must be the value of the Entry
 		if(options.size() == 1){
 			this.value = options.get(0);
 			//System.out.println(options.get(0));
 		}
+		
 	}
 }
 

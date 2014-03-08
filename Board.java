@@ -101,6 +101,8 @@ public class Board {
 		blocks[block][index].setValue(newValue);
 	}
 
+/* TO DO: Felicia: wat gebeurt er als je een option wil verwijderen die er
+niet in zit??????*/
 	// Removes an option from an Entry in a given row/column/block
 	public void removeBoardOption(int row, int column, int block, int option){
 		// Removes row option 

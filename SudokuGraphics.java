@@ -4,11 +4,16 @@ import java.awt.*;
 public class SudokuGraphics extends JPanel {
 
 	public static void main(String[] args) {
-        JFrame jf = new JFrame();
-        jf.add(new SudokuGraphics());
-        System.out.println("main loop?");
-        jf.setSize(470, 470);
-        jf.setVisible(true);
+        SudokuGraphics object = new SudokuGraphics();
+    }
+
+    private Graphics view;
+
+    public SudokuGraphics() {
+        JFrame frame = new JFrame();
+        frame.paintComponent(view);
+        frame.setSize(470, 470);
+        frame.setVisible(true);
     }
 
     public void paintComponent(Graphics obj) {

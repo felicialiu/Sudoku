@@ -40,10 +40,9 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 /* TO DO: Felicia: code netter maken, while loop fixen */
 	// This is the solve method which solves the specified sudoku
 	static void solve(Board board){
-		boolean check = false;
-		// This checks if the the sudoku has been solved
-		while(check == false){
-			check = board.checkBoard(board);
+		boolean check = board.checkBoard(board);
+		// This checks if the sudoku has been solved
+		while(!check){
 			// Keeps track 
 			int columnCount = 0;
 			int rowCount = -1;
@@ -83,7 +82,7 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 				}
 				columnCount++;
 			}
+			check = board.checkBoard(board);
 		}
-	}
-	
+	}	
 }
