@@ -14,7 +14,7 @@ public class Entry {
 	{	
 		
 		Entry test = new Entry(0);
-		ArrayList options = test.getOptions(); 
+		ArrayList options = test.getOptions();
 		for(int i = 0; i < options.size(); i++) {
 			System.out.println(options.get(i));
 		}
@@ -43,6 +43,8 @@ public class Entry {
 			for(int i = 1; i < 10; i++){
 				this.options.add(i);
 			}
+		} else {
+			this.options.add(value);
 		}
 	}
 
@@ -74,20 +76,42 @@ public class Entry {
 		return this.options;
 	}
 
-	// Removes an option from the list of options
-	public void removeOption(int number){
+	// Removes an option from the list of options, returns false if option
+	// has been removed, true if nothing has changed
+	public boolean removeOption(int number){
+		//System.out.println("Options before");
+		/*
+		for(int i = 0; i<options.size(); i++) {
+				System.out.print(" " + options.get(i));
+			}
+		*/
 		for(int i = 0; i < options.size(); i++){
 			if(number == options.get(i)){
 				options.remove(i);
+				return false;
+				/*
+				for(int j = 0; j<options.size(); j++) {
+					System.out.print(" " + options.get(j));
+				}
+				System.out.println("");*/
+				//break;
 			}
 		}
 		
 		// If there is only one option left, it must be the value of the Entry
 		if(options.size() == 1){
 			this.value = options.get(0);
-			//System.out.println(options.get(0));
+			return false;
+			/*
+			System.out.println("CHANGE!!!!!");
+			System.out.println("Set to value " + options.get(0));
+			System.out.println("size of options is " + options.size());*/
+			/*
+			for(int k = 0; k<options.size(); k++) {
+				System.out.println(options.get(k));
+			}*/
 		}
-		
+		return true;		
 	}
 }
 
