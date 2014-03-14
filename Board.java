@@ -109,8 +109,6 @@ public class Board {
 		for(int n = 0; n < 9; n++) {
 			rows[row][n].removeOption(option);
 			columns[n][row].removeOption(option);
-			blocks[
-
 		}
 
 		// Remove from all Entries in the same column, and also their reference
