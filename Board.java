@@ -8,6 +8,7 @@ public class Board {
 	private Entry[][] blocks = new Entry[9][9];
 
 	public static void main(String[] args) {
+		System.out.println(calcBlock(0,3));
 		/*
 		Board test = new Board();
 		test.setBoard(0,1,0,6);
@@ -92,15 +93,17 @@ public class Board {
 	public void setBoard(int row, int column, int block, int newValue) {
 		// Set row value 
 		rows[row][column].setValue(newValue);
-
+		/*
 		// Set column value 
 		columns[column][row].setValue(newValue);
 
 		// Set block value 
 		int index = calcBlockIndex(row, column);
 		blocks[block][index].setValue(newValue);
+		*/
 	}
 
+	/*
 	// Removes an option from all the Entries in the same row/column/block
 	public void removeOptionComplete(int row, int column, int block, int option) {
 		// Remove from all Entries in the same row, and also their reference
@@ -122,18 +125,25 @@ public class Board {
 			// block
 		}
 	}
+	*/
 
 	// Removes an option from an Entry in a given row/column/block
-	public void removeBoardOption(int row, int column, int block, int option){
+	public boolean removeBoardOption(int row, int column, int block, int option){
 		// Removes row option 
-		rows[row][column].removeOption(option);
-
+		return rows[row][column].removeOption(option);
+		/*
 		// Removes column option 
 		columns[column][row].removeOption(option);
 
 		// Removes block option 
 		int index = calcBlockIndex(row, column);
 		blocks[block][index].removeOption(option);
+		*/
+	}
+
+	// Returns the row representation of the sudoku
+	public Entry[][] getRows() {
+		return rows;
 	}
 
 	// Returns the row at index row
@@ -151,8 +161,8 @@ public class Board {
 		return blocks[block];
 	}
 
-	// Calculates the index of an Entry in a block, given location specified
-	// by row and column
+	// Calculates the local index of an Entry in a block, given location
+	// specified by row and column
 	static int calcBlockIndex(int row, int column){
 		int blockplace = column;
 		
@@ -168,7 +178,7 @@ public class Board {
 
 		// Rows 1, 4 and 7 contains all the middle 3 objects in the blocks, 
 		// meaning index is always 3, 4 or 5
-		else if(row - 1 % 3 == 0) {
+		else if((row - 1) % 3 == 0) {
 			if(column < 3){
 				blockplace += 3;
 			} else if(column > 5){
@@ -178,7 +188,7 @@ public class Board {
 
 		// Rows 2, 5 and 8 contains all the last 3 objects in the blocks, 
 		// meaning index is always 6, 7 or 8
-		else if(row - 2 % 3 == 0) {
+		else if((row - 2)% 3 == 0) {
 			if(column < 3){
 				blockplace += 6;
 			} else if(column < 5){
@@ -186,5 +196,36 @@ public class Board {
 			}
 		}
 		return blockplace;
+	}
+
+	// Given the location (row, column) of a cell, returns an integer
+	// representing the block (0,...,8) the cell belongs to
+	// For calcBlock(0,3) it will return 1
+	static int calcBlock(int row, int column) {
+		// First in-block row
+		if(row - 3 < 0 && column - 3 < 0) {
+			return 0;
+		} else if (row - 3 < 0 && column - 6 < 0) {
+			return 1;
+		} else if (row - 3 < 0 && column - 9 < 0) {
+			return 2;
+		} 
+		// Second in-block row
+		else if(row - 6 < 0 && column - 3 < 0) {
+			return 3;
+		} else if(row - 6 < 0 && column - 6 < 0) {
+			return 4;
+		} else if(row - 6 < 0 && column - 9 < 0) {
+			return 5;
+		}
+		// Third in-block row
+		else if(row - 9 < 0 && column - 3 < 0) {
+			return 6;
+		} else if(row - 9 < 0 && column - 6 < 0) {
+			return 7;
+		} else if (row - 9 < 0 && column - 9 < 0) {
+			return 8;
+		}
+		return 0;	
 	}
 }
