@@ -81,6 +81,10 @@ public class Entry {
 				options.remove(i);
 			}
 		}
+		System.out.println("removed = "+number+", array options = ");
+		for(int i = 0; i < options.size(); i++){
+			System.out.println(options.get(i));
+		}
 		
 		// If there is only one option left, it must be the value of the Entry
 		if(options.size() == 1){
