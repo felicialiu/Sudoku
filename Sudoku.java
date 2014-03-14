@@ -3,19 +3,21 @@ import java.io.*;
 
 public class Sudoku{
 
+	private static SudokuGraphics drawing; 
+
 	/* alle sudoku's inlezen en totaalscore printen */
 
 	public static void main(String[] args)
 	{
 		Board test = new Board();
-		drawSudoku(test);
-		solve(test);
-		drawSudoku(test);
+		drawing = new SudokuGraphics(9,9,test);
 
 	}
 
 	// This will draw the specified sudokuboard in the users terminal
-	static void drawSudoku(Board board){
+	static void drawSudoku(int length, int width, Board board){
+		drawing = new SudokuGraphics(length, width, board);
+	/*
 		System.out.println("-------------");
 
 		// This loop draws a row per iteration
@@ -33,6 +35,7 @@ public class Sudoku{
 			}
 		}
 		System.out.println("-------------");
+	*/
 	}
 
 /* Solving algorithm using Singles, Hidden Singles, and Naked Pairs */
@@ -95,7 +98,7 @@ static void firstTrySolver(Board board){
 			}
 			columnCount++;
 		}
-		check = board.checkBoard(board);
+		solved = board.checkBoard(board);
 	}
 }
 
@@ -138,12 +141,15 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 					if(currentRow[i].getValue() != 0){
 						board.removeBoardOption(rowIndex, columnIndex, 
 												0, currentRow[i].getValue());
+						System.out.println("row = "+rowIndex+" column = "+columnIndex+" value = "+currentRow[i].getValue());
 					}
 
 					// Does the same for an Entry in a column
 					if(currentColumn[i].getValue() != 0){
 						board.removeBoardOption(rowIndex, columnIndex,
 											0, currentColumn[i].getValue());
+						System.out.println("COLUMN row = "+columnIndex+" column = "+rowIndex+" value = "+currentColumn[i].getValue());
+
 					}
 
 					/* MISSING: removing values from options of a block */
@@ -194,5 +200,5 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 			}
 			columnIndex++;
 		}
-	}	
+	}
 }
