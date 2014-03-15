@@ -3,6 +3,8 @@ import java.io.*;
 
 public class Sudoku{
 
+	private static SudokuGraphics drawing; 
+
 	/* alle sudoku's inlezen en totaalscore printen */
 
 	public static void main(String[] args)
@@ -16,11 +18,11 @@ public class Sudoku{
 		solve(test);
 		System.out.println("Tried to solve!");
 		drawSudoku(test);
-
 	}
 
 	// This will draw the specified sudokuboard in the users terminal
-	static void drawSudoku(Board board){
+	static void drawSudoku(int length, int width, Board board){
+		// drawing = new SudokuGraphics(length, width, board);
 		System.out.println("-------------");
 
 		// This loop draws a row per iteration
@@ -40,10 +42,49 @@ public class Sudoku{
 		System.out.println("-------------");
 	}
 
+/*
+			// Current row and column
+			Entry[] currentRow = board.getRow(rowCount);
+			Entry[] currentColumn = board.getColumn(columnCount);
+
+			
+			for(int i = 0; i < 9; i++){
+				// Single
+				if(currentRow[i].checkOptions()) {
+					changed = true;
+					// remove from row/column/block
+				}
+				if (currentColumn[i].checkOptions()) {
+					changed = true;
+				}
 
 
-/* manier om uit de loop te breken als geen oplossing te vinden is, boolean
-om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
+
+
+				
+				// Removes a specific value from "options" from an Entry if
+				// that value has been found in the same row
+				if(currentRow[i].getValue() != 0){
+					board.removeBoardOption(rowCount, columnCount, 
+											0, currentRow[i].getValue());
+				}
+
+				// Does the same for an Entry in a column
+				if(currentColumn[i].getValue() != 0){
+					board.removeBoardOption(rowCount, columnCount,
+											0, currentColumn[i].getValue());
+				}
+
+				// MISSING: removing values from options of a block 
+
+			}
+			columnCount++;
+		}
+		solved = board.checkBoard(board);
+	}
+}
+*/
+
 	// This is the solve method which solves the specified sudoku
 	static void solve(Board board){
 		// Checks whether the sudoku has been solved
@@ -186,5 +227,4 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 			columnIndex++;
 		}
 	}
-	
 }
