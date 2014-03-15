@@ -8,8 +8,13 @@ public class Sudoku{
 	public static void main(String[] args)
 	{
 		Board test = new Board();
+		System.out.println("Loaded board!");
+		drawSudoku(test);
+		initBoard(test);
+		System.out.println("Updated options!");
 		drawSudoku(test);
 		solve(test);
+		System.out.println("Tried to solve!");
 		drawSudoku(test);
 
 	}
@@ -35,71 +40,7 @@ public class Sudoku{
 		System.out.println("-------------");
 	}
 
-/* Solving algorithm using Singles, Hidden Singles, and Naked Pairs */
-/*
-static void firstTrySolver(Board board){
-	// Correctly initalise options
-	initBoard(board);
 
-	// Checks whether the sudoku has been solved
-	boolean solved = board.checkBoard(board);
-	boolean changed = true;
-	while(!solved && changed){
-		changed = false;
-		int columnCount = 0;
-		int rowCount = -1;
-		
-		// Checks all 81 objects if one of the values can be assigned
-		for(int count = 0; count < 81; count++) {
-
-			// Sets the current row as the next one, and the current column
-			// back to zero in case the end of the row has been reached
-			if(count % 9 == 0){
-				rowCount++;
-				columnCount = 0;
-			}
-
-			// Current row and column
-			Entry[] currentRow = board.getRow(rowCount);
-			Entry[] currentColumn = board.getColumn(columnCount);
-
-			
-			for(int i = 0; i < 9; i++){
-				// Single
-				if(currentRow[i].checkOptions()) {
-					changed = true;
-					// remove from row/column/block
-				}
-				if (currentColumn[i].checkOptions()) {
-					changed = true;
-				}
-
-
-
-
-				
-				// Removes a specific value from "options" from an Entry if
-				// that value has been found in the same row
-				if(currentRow[i].getValue() != 0){
-					board.removeBoardOption(rowCount, columnCount, 
-											0, currentRow[i].getValue());
-				}
-
-				// Does the same for an Entry in a column
-				if(currentColumn[i].getValue() != 0){
-					board.removeBoardOption(rowCount, columnCount,
-											0, currentColumn[i].getValue());
-				}
-
-				// MISSING: removing values from options of a block 
-
-			}
-			columnCount++;
-		}
-		check = board.checkBoard(board);
-	}
-}
-*/
 
 /* manier om uit de loop te breken als geen oplossing te vinden is, boolean
 om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
@@ -130,47 +71,60 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 				}
 				blockIndex = board.calcBlock(rowIndex, columnIndex);
 				System.out.println("We are at [" + rowIndex + "," + columnIndex + "]");
-				// Current row and column
+				// Current row, column, and block
 				Entry[] currentRow = board.getRow(rowIndex);
 				Entry[] currentColumn = board.getColumn(columnIndex);
 				Entry[] currentBlock = board.getBlock(blockIndex);
 
-
-				if(board.getRows()[rowIndex][columnIndex].getValue() == 0){
+				// Current Entry
+				Entry currentCell = board.getRows()[rowIndex][columnIndex];
+				// Only process cells that don't have a value yet (value of 0)
+				if(currentCell.getValue() == 0){
 					System.out.println("I'm doing something at [" + rowIndex + "," + columnIndex + "]");
-					// Checks if there are any values in the row or column that can be 
-					// removed from the options of the current object 
-					for(int i = 0; i < 9; i++){
+					if(currentCell.assignValue()) {
+						System.out.println("I assigned a value!");
+						System.out.println("The value was " + currentCell.getValue());
+						board.removeOptionComplete(rowIndex, columnIndex, blockIndex, currentCell.getValue());
+						same = false;
+						/*
+						// Checks if there are any values in the row or column that can be 
+						// removed from the options of the current object 
+						for(int i = 0; i < 9; i++){
 
-						// Removes a specific value from "options" from an Entry if
-						// that value has been found in the same row
-						if(currentRow[i].getValue() != 0){
-							temp = board.removeBoardOption(rowIndex, columnIndex, 
-													0, currentRow[i].getValue());
-							if(same) {
-								same = temp;
+							// Removes a specific value from "options" from an Entry if
+							// that value has been found in the same row
+							if(currentRow[i].getValue() != 0){
+								temp = board.removeBoardOption(rowIndex, columnIndex, 
+														0, currentRow[i].getValue());
+								// if(board.assignValue(rowIndex, columIndex)) {
+								// removeFromAll(rowIndex)
+								// }
+								if(same) {
+									same = temp;
+								}
+								// System.out.println("ROW at ["+rowIndex+","+columnIndex+"], value " + currentRow[i].getValue());
 							}
-							// System.out.println("ROW at ["+rowIndex+","+columnIndex+"], value " + currentRow[i].getValue());
-						}
 
-						// Does the same for an Entry in a column
-						if(currentColumn[i].getValue() != 0){
-							temp = board.removeBoardOption(rowIndex, columnIndex,
-												0, currentColumn[i].getValue());
-							if(same) {
-								same = temp;
-							}
-							// System.out.println("COLUMN at ["+rowIndex+","+columnIndex+"], value " + currentColumn[i].getValue());
+							// Does the same for an Entry in a column
+							if(currentColumn[i].getValue() != 0){
+								temp = board.removeBoardOption(rowIndex, columnIndex,
+													0, currentColumn[i].getValue());
+								if(same) {
+									same = temp;
+								}
+								// System.out.println("COLUMN at ["+rowIndex+","+columnIndex+"], value " + currentColumn[i].getValue());
 
-						}
-						// Does the same for an Entry in a block
-						if(currentBlock[i].getValue() != 0) {
-							temp = board.removeBoardOption(rowIndex, columnIndex,
-								0, currentBlock[i].getValue());
-							if(same) {
-								same = temp;
+							}
+							// Does the same for an Entry in a block
+							if(currentBlock[i].getValue() != 0) {
+								temp = board.removeBoardOption(rowIndex, columnIndex,
+									0, currentBlock[i].getValue());
+								if(same) {
+									same = temp;
+								}
 							}
 						}
+						*/
 					}
 				}
 				columnIndex++;
@@ -183,7 +137,8 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 	static void initBoard(Board board) {
 		int rowIndex = -1;
 		int columnIndex = 0;
-			
+		int blockIndex = 0;		
+		
 		// Checks all 81 objects if one of the values can be assigned
 		for(int count = 0; count < 81; count++) {
 
@@ -193,12 +148,18 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 				rowIndex++;
 				columnIndex = 0;
 			}
+			blockIndex = board.calcBlock(rowIndex, columnIndex);
 
-			// Current row and column
+			System.out.println("We are at [" + rowIndex + "," + columnIndex + "]");
+			
+			// Current row, column, block
 			Entry[] currentRow = board.getRow(rowIndex);
 			Entry[] currentColumn = board.getColumn(columnIndex);
+			Entry[] currentBlock = board.getBlock(blockIndex);
 
-			if(board.getRows()[rowIndex][columnIndex].getValue() == 0) {
+			// Only process cells that don't have a value yet (value of 0)
+			if(board.getRows()[rowIndex][columnIndex].getValue() == 0){
+				System.out.println("I'm doing something at [" + rowIndex + "," + columnIndex + "]");
 				// Checks if there are any values in the row or column that can be 
 				// removed from the options of the current object 
 				for(int i = 0; i < 9; i++){
@@ -215,10 +176,15 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 						board.removeBoardOption(rowIndex, columnIndex,
 											0, currentColumn[i].getValue());
 					}
-				/* MISSING: removing values from options of a block */
+					// Does the same for an Entry in a block
+					if(currentBlock[i].getValue() != 0) {
+						board.removeBoardOption(rowIndex, columnIndex,
+							0, currentBlock[i].getValue());
+					}
 				}
 			}
 			columnIndex++;
 		}
-	}	
+	}
+	
 }
