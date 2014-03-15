@@ -72,7 +72,7 @@ public class Entry {
 
 	// Returns the ArrayList containing the current possible options for this
 	// sudoku Entry ((sub)set of values 1-9)
-	public ArrayList getOptions(){
+	public ArrayList<Integer> getOptions(){
 		return this.options;
 	}
 

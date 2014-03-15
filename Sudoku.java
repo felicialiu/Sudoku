@@ -11,6 +11,8 @@ public class Sudoku{
 	{
 		Board test = new Board();
 		drawing = new SudokuGraphics(9,9,test);
+		hiddenpair(test.getBlock(0));
+
 
 	}
 
@@ -222,6 +224,20 @@ om bij te houden of er aanpassingen zijn geweest tijdens 1 while */
 				}
 			}
 			columnIndex++;
+		}
+	}
+
+	static void hiddenpair(Entry[] block){
+		int[] quantities = new int[9];
+		ArrayList<Integer> currentOptions = new ArrayList<Integer>();
+		for(int i = 0; i < 9; i++){
+			if(block[i].getValue() == 0){
+				currentOptions = block[i].getOptions();
+				for(int j = 0; j < currentOptions.size(); j++){
+					quantities[currentOptions.get(i) - 1] += 1;
+					System.out.println(quantities[currentOptions.get(i) - 1]);
+				}
+			}
 		}
 	}
 }
