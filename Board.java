@@ -30,7 +30,6 @@ public class Board {
 
 	// Constructor that creates a sudokuBoard representation from reading in
 	// the textfile easySudoku.txt
-/* TO DO: Jonas - use methods to make Board() constructor more readable */
 	public Board() {
 		try {
 			int blockindex = 0;
@@ -103,29 +102,15 @@ public class Board {
 		*/
 	}
 
-	/*
 	// Removes an option from all the Entries in the same row/column/block
 	public void removeOptionComplete(int row, int column, int block, int option) {
-		// Remove from all Entries in the same row, and also their reference
-		// in column block
-
-		for(int n = 0; n < 9; n++) {
-			rows[row][n].removeOption(option);
-			columns[n][row].removeOption(option);
-		}
-
-		// Remove from all Entries in the same column, and also their reference
-		// in row
-		for(int m = 0; m < 9; m++) {
-			columns[column][m].removeOption(option);
-			rows[m][column].removeOption(option);
-		}
-
-		for(int k = 0; k < 9; k++) {
-			// block
+		// Remove option from all Entries in the row, column, and block
+		for(int i = 0; i < 9; i++) {
+			rows[row][i].removeOption(option);
+			columns[column][i].removeOption(option);
+			blocks[block][i].removeOption(option);
 		}
 	}
-	*/
 
 	// Removes an option from an Entry in a given row/column/block
 	public boolean removeBoardOption(int row, int column, int block, int option){

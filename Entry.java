@@ -79,12 +79,6 @@ public class Entry {
 	// Removes an option from the list of options, returns false if option
 	// has been removed, true if nothing has changed
 	public boolean removeOption(int number){
-		//System.out.println("Options before");
-		/*
-		for(int i = 0; i<options.size(); i++) {
-				System.out.print(" " + options.get(i));
-			}
-		*/
 		for(int i = 0; i < options.size(); i++){
 			if(number == options.get(i)){
 				options.remove(i);
@@ -97,11 +91,8 @@ public class Entry {
 				//break;
 			}
 		}
-		System.out.println("removed = "+number+", array options = ");
-		for(int i = 0; i < options.size(); i++){
-			System.out.println(options.get(i));
-		}
-		
+
+		/*
 		// If there is only one option left, it must be the value of the Entry
 		if(options.size() == 1){
 			this.value = options.get(0);
@@ -114,8 +105,18 @@ public class Entry {
 			for(int k = 0; k<options.size(); k++) {
 				System.out.println(options.get(k));
 			}*/
-		}
 		return true;		
+	}
+
+	// Checks whether a cell can be assigned a final value, returns true when
+	// it has done so
+	public boolean assignValue() {
+		if(options.size() == 1) {
+			this.value = options.get(0);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
