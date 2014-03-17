@@ -9,20 +9,31 @@ public class Sudoku{
 
 	public static void main(String[] args)
 	{
-		/*
+		
 		Board test = new Board();
+		/*
 		drawing = new SudokuGraphics(9,9,test);
 		hiddenpair(test.getBlock(0));
 		*/
 
 		System.out.println("Loaded board!");
-		drawSudoku(test);
+		drawSudoku(9,9, test);
+		initBoard(test);
+		drawSudoku(9,9, test);
+		solve(test);
+		drawSudoku(9,9, test);
+		for (int i =0; i<9 ;i++ ) {
+			hiddenpair(test.getBlock(i));	
+		}	
+		drawSudoku(9,9, test);
+		/*
 		initBoard(test);
 		System.out.println("Updated options!");
-		drawSudoku(test);
+		drawSudoku(9,9, test);
 		solve(test);
 		System.out.println("Tried to solve!");
-		drawSudoku(test);
+		drawSudoku(9,9, test);
+		*/
 	}
 
 	// This will draw the specified sudokuboard in the users terminal
@@ -233,17 +244,50 @@ public class Sudoku{
 		}
 	}
 
-	static void hiddenpair(Entry[] block){
-		int[] quantities = new int[9];
+	static void hiddenpair(Entry[] house){
+		int[][] quantities = new int[9][2];
 		ArrayList<Integer> currentOptions = new ArrayList<Integer>();
+		int collection = 0;
+
+		// This initializes numbers 1 through 9 in the array
+		for(int x = 0; x < 9; x++){
+			quantities[x][0] = x+1;
+		}
+
+		// This calculates the quantities in the specified house
 		for(int i = 0; i < 9; i++){
-			if(block[i].getValue() == 0){
-				currentOptions = block[i].getOptions();
+			if(house[i].getValue() == 0){
+				currentOptions = house[i].getOptions();
 				for(int j = 0; j < currentOptions.size(); j++){
-					quantities[currentOptions.get(i) - 1] += 1;
-					System.out.println(quantities[currentOptions.get(i) - 1]);
+					quantities[currentOptions.get(j) - 1][1] += 1;
 				}
 			}
 		}
+
+		// hidden single
+		for(int z = 0; z < 9; z++){
+			if(quantities[z][1] == 1){
+				for (int s = 0; s < 9; s++) {
+					if(house[s].getValue() == 0){
+						for (int d = 0; d < house[s].getOptions().size();d++) {
+							if(quantities[z][0] == house[s].getOptions().get(d)){
+								house[s].setValue(quantities[z][0]);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Hidden pairs
+		for(int w = 0; w < 9; w++){
+			if(quantities[z][1] == 2){
+				collection++;
+			}
+		}
+		if(collection > 1){
+			
+		}
+
 	}
 }
