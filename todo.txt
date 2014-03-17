@@ -1,0 +1,13 @@
+Jonas
+- Hidden Single en Hidden Pair implementeren
+
+
+Felicia
+- Naked Pairs implementeren
+- Locked Pairs implementeren
+- Hidden Triple?
+
+???
+- alle sudoku's achter elkaar oplossen
+- score printen
+- Verslag schrijven

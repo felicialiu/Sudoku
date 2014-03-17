@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Sudoku{
+public class Sudoku {
 
 	private static SudokuGraphics drawing; 
 
