@@ -5,6 +5,8 @@ public class Sudoku {
 
 	private static SudokuGraphics drawing; 
 
+	public static boolean same = false;
+
 	/* alle sudoku's inlezen en totaalscore printen */
 
 	public static void main(String[] args)
@@ -19,13 +21,22 @@ public class Sudoku {
 		System.out.println("Loaded board!");
 		drawSudoku(9,9, test);
 		initBoard(test);
+		System.out.println("Initialized board");
 		drawSudoku(9,9, test);
 		solve(test);
+		System.out.println("solved board");
 		drawSudoku(9,9, test);
+		/*
 		for (int i =0; i<9 ;i++ ) {
-			hiddenpair(test.getBlock(i));	
+			Hidden.hiddenpair(test.getColumn(i));	
+			Hidden.hiddenpair(test.getRow(i));
+			Hidden.hiddenpair(test.getColumn(i));
 		}	
-		drawSudoku(9,9, test);
+		*/
+		//Hidden.hiddenpair(test.getColumn(8));
+		//drawSudoku(9,9, test);
+		//System.out.println("hidden solved");
+		//System.out.println("hidden pair = "+test.getColumn(8)[4].getOptions().get(2));
 		/*
 		initBoard(test);
 		System.out.println("Updated options!");
@@ -107,7 +118,6 @@ public class Sudoku {
 		boolean solved = board.checkBoard(board);
 
 		// Checks whether sudoku has been adjusted
-		boolean same = false;
 		boolean temp;
 		
 		while(!solved && !same){
@@ -127,7 +137,7 @@ public class Sudoku {
 					columnIndex = 0;
 				}
 				blockIndex = board.calcBlock(rowIndex, columnIndex);
-				System.out.println("We are at [" + rowIndex + "," + columnIndex + "]");
+				//System.out.println("We are at [" + rowIndex + "," + columnIndex + "]");
 				// Current row, column, and block
 				Entry[] currentRow = board.getRow(rowIndex);
 				Entry[] currentColumn = board.getColumn(columnIndex);
@@ -137,10 +147,10 @@ public class Sudoku {
 				Entry currentCell = board.getRows()[rowIndex][columnIndex];
 				// Only process cells that don't have a value yet (value of 0)
 				if(currentCell.getValue() == 0){
-					System.out.println("I'm doing something at [" + rowIndex + "," + columnIndex + "]");
+					//System.out.println("I'm doing something at [" + rowIndex + "," + columnIndex + "]");
 					if(currentCell.assignValue()) {
-						System.out.println("I assigned a value!");
-						System.out.println("The value was " + currentCell.getValue());
+						//System.out.println("I assigned a value!");
+						//System.out.println("The value was " + currentCell.getValue());
 						board.removeOptionComplete(rowIndex, columnIndex, blockIndex, currentCell.getValue());
 						same = false;
 						/*
@@ -186,6 +196,20 @@ public class Sudoku {
 				}
 				columnIndex++;
 			}
+			if(same){
+				for (int i =0; i<9 ;i++ ) {
+					Hidden.hiddenCombi(board.getColumn(i), board);
+					initBoard(board);
+				}	
+				for (int i =0; i<9 ;i++ ) {
+					Hidden.hiddenCombi(board.getBlock(i), board);
+					initBoard(board);
+				}
+				for (int i =0; i<9 ;i++ ) {
+					Hidden.hiddenCombi(board.getRow(i), board);
+					initBoard(board);
+				}
+			}
 			solved = board.checkBoard(board);
 		}
 	}
@@ -207,7 +231,7 @@ public class Sudoku {
 			}
 			blockIndex = board.calcBlock(rowIndex, columnIndex);
 
-			System.out.println("We are at [" + rowIndex + "," + columnIndex + "]");
+			//System.out.println("We are at [" + rowIndex + "," + columnIndex + "]");
 			
 			// Current row, column, block
 			Entry[] currentRow = board.getRow(rowIndex);
@@ -216,7 +240,7 @@ public class Sudoku {
 
 			// Only process cells that don't have a value yet (value of 0)
 			if(board.getRows()[rowIndex][columnIndex].getValue() == 0){
-				System.out.println("I'm doing something at [" + rowIndex + "," + columnIndex + "]");
+				//System.out.println("I'm doing something at [" + rowIndex + "," + columnIndex + "]");
 				// Checks if there are any values in the row or column that can be 
 				// removed from the options of the current object 
 				for(int i = 0; i < 9; i++){
@@ -242,52 +266,5 @@ public class Sudoku {
 			}
 			columnIndex++;
 		}
-	}
-
-	static void hiddenpair(Entry[] house){
-		int[][] quantities = new int[9][2];
-		ArrayList<Integer> currentOptions = new ArrayList<Integer>();
-		int collection = 0;
-
-		// This initializes numbers 1 through 9 in the array
-		for(int x = 0; x < 9; x++){
-			quantities[x][0] = x+1;
-		}
-
-		// This calculates the quantities in the specified house
-		for(int i = 0; i < 9; i++){
-			if(house[i].getValue() == 0){
-				currentOptions = house[i].getOptions();
-				for(int j = 0; j < currentOptions.size(); j++){
-					quantities[currentOptions.get(j) - 1][1] += 1;
-				}
-			}
-		}
-
-		// hidden single
-		for(int z = 0; z < 9; z++){
-			if(quantities[z][1] == 1){
-				for (int s = 0; s < 9; s++) {
-					if(house[s].getValue() == 0){
-						for (int d = 0; d < house[s].getOptions().size();d++) {
-							if(quantities[z][0] == house[s].getOptions().get(d)){
-								house[s].setValue(quantities[z][0]);
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// Hidden pairs
-		for(int w = 0; w < 9; w++){
-			if(quantities[z][1] == 2){
-				collection++;
-			}
-		}
-		if(collection > 1){
-			
-		}
-
 	}
 }
