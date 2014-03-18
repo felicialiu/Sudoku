@@ -3,130 +3,125 @@ import java.io.*;
 
 public class Hidden{
 
-	static void hiddenCombi(Entry[] house, Board board){
-		hiddenSingle(frequentie(house), house);
-		hiddenPair(frequentie(house), house);
+	public static void hiddenCombi(Entry[] house, Board board){
+		hiddenSingle(getFrequencies(house), house);
+		Sudoku.initBoard(board);
+		// hiddenPair(getFrequencies(house), house);
+		// Sudoku.initBoard(board);
 	}
 
-	public static int[][] frequentie(Entry[] house){
+	// Returns a table that contains the number of occurences for
+	// each option in a house
+	public static int[][] getFrequencies(Entry[] house){
+		// This contains the frequenties of the numbers 1 through 9 in one house
+		int[][] frequencyTable = new int[9][2];
 
-		// This contains the frequentie of the numbers 1 through 9 in one house
-		int[][] frequenties = new int[9][2];
+		// This initializes numbers 1 through 9 in the array
+		for(int x = 0; x < 9; x++){
+			frequencyTable[x][0] = x+1;
+		}
 
 		// These are the options for one entry object
 		ArrayList<Integer> currentOptions = new ArrayList<Integer>();
 
-		// This initializes numbers 1 through 9 in the array
-		for(int x = 0; x < 9; x++){
-			frequenties[x][0] = x+1;
-		}
-
-		// This calculates the frequenties in the specified house
+		// This calculates the frequencies in the specified house
 		for(int i = 0; i < 9; i++){
 			// If value is equal to zero, this object has options
 			if(house[i].getValue() == 0){
 				// Get the options from the cell at this index
 				currentOptions = house[i].getOptions();
-				// Loops through the cells options and adds the frequenties 
+				// Loops through the cell's options and counts occurences 
 				for(int j = 0; j < currentOptions.size(); j++){
-					frequenties[currentOptions.get(j)-1][1]++;
+					frequencyTable[currentOptions.get(j)-1][1]++;
 				}
 			}
 		}
-		return frequenties;
+		return frequencyTable;
 	}
 
-	public static void hiddenSingle(int[][] frequenties, Entry[] house){
-
+	// Looks for Hidden Singles in a house
+	public static void hiddenSingle(int[][] frequencyTable, Entry[] house){
 		// Loop through all the frequenties
 		for(int z = 0; z < 9; z++){
-			if(frequenties[z][1] == 1){
-				// Loop through the entire house if a frequentie is 1
+			if(frequencyTable[z][1] == 1){
+				// Loop through the entire house if a frequency is 1
 				for (int s = 0; s < 9; s++) {
 					if(house[s].getValue() == 0){
 						// If the object contains the specific hidden single, the value is set
-						if(house[s].getOptions().contains(frequenties[z][0])){
-							house[s].setValue(frequenties[z][0]);
+						if(house[s].getOptions().contains(frequencyTable[z][0])){
+							house[s].setValue(frequencyTable[z][0]);
 							Sudoku.same = false;
 						}
 					}
 				}
 			}
 		}
-
 	}
 
-	static void hiddenPair(int[][] frequenties, Entry[] house){
-
-		// hidden pair count
+	// Searches for Hidden Pairs in a house by looking if any of the pairs of 
+	// all numbers are found twice in one house
+	static void hiddenPair(int[][] frequencyTable, Entry[] house){
+		// Hidden pair count
 		int hpCount = 0;
 
-		// This contains the possible hidden pairs
+		// This contains all the options that occur in a house
 		ArrayList<Integer> collection = new ArrayList<Integer>();
 		
 		// Hidden pair position in the house
-		ArrayList<Integer> hpposition = new ArrayList<Integer>();
+		ArrayList<Integer> hpPosition = new ArrayList<Integer>();
 
-		// The options of a hidden pair in the house
-		ArrayList<Integer> hpoptions = new ArrayList<Integer>();
+		// The options of the cell containing a hidden pair
+		ArrayList<Integer> hpOptions = new ArrayList<Integer>();
 
-		// The collection of permutated hidden pairs
-		ArrayList<ArrayList<Integer>> pcollection = new ArrayList<ArrayList<Integer>>();
+		// The collection of possible number pair combinations
+		ArrayList<ArrayList<Integer>> permutations = new ArrayList<ArrayList<Integer>>();
 
-		// This checks which numbers have a frequentie of 2 and adds these to collection
+		// This checks which numbers have a frequency of 2 and adds these to collection
 		for(int w = 0; w < 9; w++){
-			if(frequenties[w][1] == 2){
-				collection.add(frequenties[w][0]);
+			if(frequencyTable[w][1] == 2){
+				collection.add(frequencyTable[w][0]);
 			}
 		}
 
 		//If the collection is bigger then 1 it means there are possible hidden pairs
 		if(collection.size() > 1){
-			pcollection = Permutation.permutate(collection);
-			// This loops through one house
-
+			permutations = Permutation.permutate(collection);
+			
 			// This loops through all of the permutations
-			for(int l = 0; l < pcollection.size(); l++){
+			for(int l = 0; l < permutations.size(); l++){
+				// This loops through one house
 				for(int p = 0; p < 9; p++){
 					// If both numbers of the permutation are in the specified house position, a pair is found
-					if(house[p].getOptions().contains(pcollection.get(l).get(0))
-										&& house[p].getOptions().contains(pcollection.get(l).get(1))){
+					if(house[p].getOptions().contains(permutations.get(l).get(0))
+										&& house[p].getOptions().contains(permutations.get(l).get(1))){
 						hpCount++;
-						hpposition.add(p);
+						hpPosition.add(p);
 					}
 				}
 				// This means the specific permutation is a hidden pair
 				if(hpCount == 2){
-					break;
-				}else{
+					System.out.println("hidden pair found");
+					// This goes through the 2 positions
+					//for(int i = 0; i < pcollection.size(); i++){
+					for (int t = 0; t < hpPosition.size(); t++){
+						System.out.println("size = " + hpPosition.size());
+						System.out.println("collection size = " + permutations.size());
+						// These are the options of a specified house position
+						hpOptions = house[hpPosition.get(t)].getOptions();
+						// This loops through all the options of a specified house position
+						for (int k = 0; k < hpOptions.size(); k++) {
+							// If the option does not equal the pair, the option is removed
+							if(permutations.get(l).get(0) != hpOptions.get(k) && permutations.get(l).get(1) != hpOptions.get(k)){
+								house[hpPosition.get(t)].removeOption(hpOptions.get(k));
+								Sudoku.same = false;
+							}
+						}
+					}
+				} else {
 					hpCount = 0;
-					hpposition.clear();
+					hpPosition.clear();
 				}
 			}
 		}
-
-		// If there are 2 pairs there is a hidden pair
-		if(hpCount == 2){
-			System.out.println("hidden pair found");
-			// This goes through the 2 positions
-			//for(int i = 0; i < pcollection.size(); i++){
-				for (int t = 0; t < hpposition.size(); t++){
-					System.out.println("size = "+hpposition.size());
-					System.out.println("collection size = "+pcollection.size());
-					// These are the options of a specified house position
-					hpoptions = house[hpposition.get(t)].getOptions();
-					// This loops through all the options of a specified house position
-					for (int k = 0; k < hpoptions.size(); k++) {
-							// If the option does not equal the pair, the option is removed
-							if(pcollection.get(0).get(0) != hpoptions.get(k) || pcollection.get(0).get(1) != hpoptions.get(k)){
-								house[hpposition.get(t)].removeOption(hpoptions.get(k));
-								Sudoku.same = false;
-							}
-					}
-				}
-			//}
-		}
-
 	}
-
 }
