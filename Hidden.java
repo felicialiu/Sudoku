@@ -39,6 +39,7 @@ public class Hidden{
 				test[8].removeOption(i);
 			}
 		}
+		hiddenPair(getFrequencies(test), test);
 	}
 
 	public static void hiddenCombi(Entry[] house, Board board){
@@ -151,6 +152,7 @@ public class Hidden{
 							// If the option does not equal the pair, the option is removed
 							if(permutations.get(l).get(0) != hpOptions.get(k) && permutations.get(l).get(1) != hpOptions.get(k)){
 								house[hpPosition.get(t)].removeOption(hpOptions.get(k));
+								System.out.println("remove "+hpOptions.get(k)+"from"+k);
 								Sudoku.same = false;
 							}
 						}
