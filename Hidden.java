@@ -3,6 +3,44 @@ import java.io.*;
 
 public class Hidden{
 
+	private static Entry[] test = new Entry[9];
+
+	public static void main(String[] args){
+		for(int i = 0; i < 9; i++){
+			Entry object = new Entry(0);
+			test[i] = object;
+		}
+		test[0].setValue(7);
+		for(int i  = 1; i < 10; i++){
+			if(i != 2 && i != 3){
+				test[1].removeOption(i);
+			}
+		}
+		for(int i  = 1; i < 10; i++){
+			if(i != 2 && i != 3 && i != 5){
+				test[2].removeOption(i);
+			}
+		}
+		for(int i  = 1; i < 10; i++){
+			if(i != 1 && i != 2 && i != 5 && i!= 9){
+				test[3].removeOption(i);
+			}
+		}
+		test[4].setValue(8);
+		test[5].setValue(4);
+		for(int i  = 1; i < 10; i++){
+			if(i != 1 && i != 5 && i != 9){
+				test[6].removeOption(i);
+			}
+		}
+		test[7].setValue(6);
+		for(int i  = 1; i < 10; i++){
+			if(i != 5 && i != 3){
+				test[8].removeOption(i);
+			}
+		}
+	}
+
 	public static void hiddenCombi(Entry[] house, Board board){
 		hiddenSingle(getFrequencies(house), house);
 		Sudoku.initBoard(board);
