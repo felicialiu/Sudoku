@@ -197,6 +197,23 @@ public class Sudoku {
 				columnIndex++;
 			}
 			if(same){
+				NakedPairs.nakedPairs(board);
+				/*
+				for (int i =0; i<9 ;i++ ) {
+					/*
+					Hidden.hiddenCombi(board.getRow(i), board);
+					initBoard(board);
+					
+					Hidden.hiddenCombi(board.getColumn(i), board);
+					initBoard(board);
+					
+
+					Hidden.hiddenCombi(board.getBlock(i), board);
+					initBoard(board);
+					/*
+
+				}
+				/*
 				for (int i =0; i<9 ;i++ ) {
 					Hidden.hiddenCombi(board.getColumn(i), board);
 					initBoard(board);
@@ -204,11 +221,9 @@ public class Sudoku {
 				for (int i =0; i<9 ;i++ ) {
 					Hidden.hiddenCombi(board.getBlock(i), board);
 					initBoard(board);
-				}
-				for (int i =0; i<9 ;i++ ) {
-					Hidden.hiddenCombi(board.getRow(i), board);
-					initBoard(board);
-				}
+				
+				}*/
+				
 			}
 			solved = board.checkBoard(board);
 		}

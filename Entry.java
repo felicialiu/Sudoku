@@ -68,6 +68,8 @@ public class Entry {
 	public void setValue(int value)
 	{
 		this.value = value;
+		this.options.clear();
+		this.options.add(value);
 	}
 
 	// Returns the ArrayList containing the current possible options for this

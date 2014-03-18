@@ -6,6 +6,7 @@ public class Hidden{
 	private static Entry[] test = new Entry[9];
 
 	public static void main(String[] args){
+		/*
 		for(int i = 0; i < 9; i++){
 			Entry object = new Entry(0);
 			test[i] = object;
@@ -39,14 +40,21 @@ public class Hidden{
 				test[8].removeOption(i);
 			}
 		}
+		for(int i = 0; i < test[3].getOptions().size(); i++) {
+			System.out.println(test[3].getOptions().get(i));
+		}
 		hiddenPair(getFrequencies(test), test);
+		for(int i = 0; i < test[3].getOptions().size(); i++) {
+			System.out.println(test[3].getOptions().get(i));
+		}
+		*/
 	}
 
 	public static void hiddenCombi(Entry[] house, Board board){
 		hiddenSingle(getFrequencies(house), house);
 		Sudoku.initBoard(board);
-		// hiddenPair(getFrequencies(house), house);
-		// Sudoku.initBoard(board);
+		hiddenPair(getFrequencies(house), house, board);
+		Sudoku.initBoard(board);
 	}
 
 	// Returns a table that contains the number of occurences for
@@ -99,7 +107,7 @@ public class Hidden{
 
 	// Searches for Hidden Pairs in a house by looking if any of the pairs of 
 	// all numbers are found twice in one house
-	static void hiddenPair(int[][] frequencyTable, Entry[] house){
+	static void hiddenPair(int[][] frequencyTable, Entry[] house, Board board){
 		// Hidden pair count
 		int hpCount = 0;
 
@@ -125,38 +133,54 @@ public class Hidden{
 		//If the collection is bigger then 1 it means there are possible hidden pairs
 		if(collection.size() > 1){
 			permutations = Permutation.permutate(collection);
+			// System.out.println("There are " + permutations.size() + " permutations");
+
+			/*
+			for(int y = 0; y < permutations.size(); y++) {
+				for(int index = 0; index < 2; index++) {
+					System.out.println(permutations.get(y).get(index));
+				}
+			}
+			*/
 			
 			// This loops through all of the permutations
 			for(int l = 0; l < permutations.size(); l++){
+				// System.out.println("test");
 				// This loops through one house
 				for(int p = 0; p < 9; p++){
 					// If both numbers of the permutation are in the specified house position, a pair is found
 					if(house[p].getOptions().contains(permutations.get(l).get(0))
 										&& house[p].getOptions().contains(permutations.get(l).get(1))){
+						// System.out.println("The permutation was found on index " + p);
 						hpCount++;
 						hpPosition.add(p);
 					}
 				}
-				// This means the specific permutation is a hidden pair
+				// If the permutation has been found twice, it's a hidden pair
 				if(hpCount == 2){
 					System.out.println("hidden pair found");
 					// This goes through the 2 positions
-					//for(int i = 0; i < pcollection.size(); i++){
 					for (int t = 0; t < hpPosition.size(); t++){
-						System.out.println("size = " + hpPosition.size());
-						System.out.println("collection size = " + permutations.size());
+						// System.out.println("The number of positions is " + hpPosition.size());
 						// These are the options of a specified house position
 						hpOptions = house[hpPosition.get(t)].getOptions();
 						// This loops through all the options of a specified house position
+						// System.out.println("The number of options in cell " + hpPosition.get(t) + " is " + hpOptions.size());
 						for (int k = 0; k < hpOptions.size(); k++) {
+
+							System.out.println("The hidden pair consists of " + permutations.get(l).get(0) + " and " + permutations.get(l).get(1));
+							// System.out.println("help" + hpOptions.get(k));
 							// If the option does not equal the pair, the option is removed
 							if(permutations.get(l).get(0) != hpOptions.get(k) && permutations.get(l).get(1) != hpOptions.get(k)){
+								// System.out.println("remove " + hpOptions.get(k) + " from " + hpPosition.get(t));
 								house[hpPosition.get(t)].removeOption(hpOptions.get(k));
-								System.out.println("remove "+hpOptions.get(k)+"from"+k);
+								k--;
 								Sudoku.same = false;
 							}
 						}
 					}
+					Sudoku.initBoard(board);
+
 				} else {
 					hpCount = 0;
 					hpPosition.clear();
