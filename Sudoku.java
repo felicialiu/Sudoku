@@ -17,6 +17,7 @@ public class Sudoku {
 	public static void main(String[] args)
 	{	
 		int total = 0;
+<<<<<<< HEAD
 		int totalSolved = 0;
 		int totalUnsolved = 0;
 		String fileName = "";
@@ -38,22 +39,23 @@ public class Sudoku {
 		} catch (IOException e) {
 	        e.printStackTrace();
 	    }
-		for (int i = 0; i < total ;i++) {
-			Board test = new Board(sudokuReader);
 			/*
 			drawing = new SudokuGraphics(9,9,test);
 			hiddenpair(test.getBlock(0));
 			*/
 
-			//System.out.println("Loaded board!");
-			//drawSudoku(9,9, test);
+	    // The start time of our algorithm
+	    long start = System.currentTimeMillis();
+
+	    // The number of sudoku's the user wants solved
+	    length = Integer.parseInt(args[1]);
+	 
+	 	// Tries to solve all the sudoku's  
+		for (int i = 0; i < length ;i++) {
+			Board test = new Board(sudokuReader);
+			//drawing = new SudokuGraphics(9,9,test);
 			initBoard(test);
-			//System.out.println("Initialized board");
-			//drawSudoku(9,9, test);
 			solve(test);
-			//System.out.println("solved board");
-			//drawSudoku(9,9, test);
-			//System.out.println("Sudoku "+i+" solved is "+solved);
 			if(solved == true){
 				totalSolved++;
 				drawSudoku(9,9,test);
@@ -85,6 +87,16 @@ public class Sudoku {
 		System.out.println("Tried to solve!");
 		drawSudoku(9,9, test);
 		*/
+
+		// The end time of our algorithm
+		long end = System.currentTimeMillis();
+
+		System.out.println("Total number of sudoku's loaded is "+(total+totalnot));
+		System.out.println("Number of sudoku's solved is "+total);
+		System.out.println("Number of sudoku's unsolved is "+totalnot);
+		System.out.println("Solve rate is "+(int)(((double)total/(double)(total+totalnot))*100)+" %");
+		System.out.println("Time elapsed is "+(end-start)+" ms");
+
 	}
 
 	// This will draw the specified sudokuboard in the users terminal
@@ -155,9 +167,7 @@ public class Sudoku {
 				columnIndex++;
 			}
 			if(same){
-				NakedPairs.nakedPairs(board);
-				initBoard(board);
-				/*
+				//NakedPairs.nakedPairs(board);
 				for (int i =0; i<9 ;i++ ) {
 					
 					Hidden.hiddenCombi(board.getRow(i), board);
@@ -166,24 +176,10 @@ public class Sudoku {
 					Hidden.hiddenCombi(board.getColumn(i), board);
 					initBoard(board);
 					
-
-					Hidden.hiddenCombi(board.getBlock(i), board);
-					initBoard(board);
-				}*/
-				
-				
-				for (int i =0; i<9 ;i++ ) {
-					Hidden.hiddenCombi(board.getColumn(i), board);
-					initBoard(board);
-				}	
-				for (int i =0; i<9 ;i++ ) {
 					Hidden.hiddenCombi(board.getBlock(i), board);
 					initBoard(board);
 				}
-				for (int i =0; i<9 ;i++ ) {
-					Hidden.hiddenCombi(board.getRow(i), board);
-					initBoard(board);
-				}
+	
 				
 			}
 			//initBoard(board);
