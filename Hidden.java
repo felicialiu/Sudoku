@@ -53,8 +53,8 @@ public class Hidden{
 	public static void hiddenCombi(Entry[] house, Board board){
 		hiddenSingle(getFrequencies(house), house);
 		Sudoku.initBoard(board);
-		hiddenPair(getFrequencies(house), house, board);
-		Sudoku.initBoard(board);
+		//hiddenPair(getFrequencies(house), house, board);
+		//Sudoku.initBoard(board);
 	}
 
 	// Returns a table that contains the number of occurences for
@@ -158,7 +158,7 @@ public class Hidden{
 				}
 				// If the permutation has been found twice, it's a hidden pair
 				if(hpCount == 2){
-					System.out.println("hidden pair found");
+					//System.out.println("hidden pair found");
 					// This goes through the 2 positions
 					for (int t = 0; t < hpPosition.size(); t++){
 						// System.out.println("The number of positions is " + hpPosition.size());
@@ -168,7 +168,7 @@ public class Hidden{
 						// System.out.println("The number of options in cell " + hpPosition.get(t) + " is " + hpOptions.size());
 						for (int k = 0; k < hpOptions.size(); k++) {
 
-							System.out.println("The hidden pair consists of " + permutations.get(l).get(0) + " and " + permutations.get(l).get(1));
+							//System.out.println("The hidden pair consists of " + permutations.get(l).get(0) + " and " + permutations.get(l).get(1));
 							// System.out.println("help" + hpOptions.get(k));
 							// If the option does not equal the pair, the option is removed
 							if(permutations.get(l).get(0) != hpOptions.get(k) && permutations.get(l).get(1) != hpOptions.get(k)){
