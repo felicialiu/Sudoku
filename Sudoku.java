@@ -17,55 +17,41 @@ public class Sudoku {
 	{
 		int total = 0;
 		int totalnot = 0;
+		int length = 0;
+
+		// The buffereader that reads the user specified text file
 		try{
-			sudokuReader = new BufferedReader(new FileReader("subig20.txt"));
+			sudokuReader = new BufferedReader(new FileReader(args[0]+".txt"));
 		} catch (IOException e) {
 	            e.printStackTrace();
 	        }
-		for (int i = 0; i < 100 ;i++) {
-			Board test = new Board(sudokuReader);
-			/*
-			drawing = new SudokuGraphics(9,9,test);
-			hiddenpair(test.getBlock(0));
-			*/
 
-			//System.out.println("Loaded board!");
-			//drawSudoku(9,9, test);
+	    // The start time of our algorithm
+	    long start = System.currentTimeMillis();
+
+	    // The number of sudoku's the user wants solved
+	    length = Integer.parseInt(args[1]);
+	 
+	 	// Tries to solve all the sudoku's  
+		for (int i = 0; i < length ;i++) {
+			Board test = new Board(sudokuReader);
+			//drawing = new SudokuGraphics(9,9,test);
 			initBoard(test);
-			//System.out.println("Initialized board");
-			//drawSudoku(9,9, test);
 			solve(test);
-			//System.out.println("solved board");
-			//drawSudoku(9,9, test);
-			//System.out.println("Sudoku "+i+" solved is "+solved);
 			if(solved == true){
 				total++;
-				drawSudoku(9,9,test);
 			}else{
 				totalnot++;
 			}
 		}
-		System.out.println("total solved "+total);
-		System.out.println("total not solved "+totalnot);
-		/*
-		for (int i =0; i<9 ;i++ ) {
-			Hidden.hiddenpair(test.getColumn(i));	
-			Hidden.hiddenpair(test.getRow(i));
-			Hidden.hiddenpair(test.getColumn(i));
-		}	
-		*/
-		//Hidden.hiddenpair(test.getColumn(8));
-		//drawSudoku(9,9, test);
-		//System.out.println("hidden solved");
-		//System.out.println("hidden pair = "+test.getColumn(8)[4].getOptions().get(2));
-		/*
-		initBoard(test);
-		System.out.println("Updated options!");
-		drawSudoku(9,9, test);
-		solve(test);
-		System.out.println("Tried to solve!");
-		drawSudoku(9,9, test);
-		*/
+		// The end time of our algorithm
+		long end = System.currentTimeMillis();
+
+		System.out.println("Total number of sudoku's loaded is "+(total+totalnot));
+		System.out.println("Number of sudoku's solved is "+total);
+		System.out.println("Number of sudoku's unsolved is "+totalnot);
+		System.out.println("Solve rate is "+(int)(((double)total/(double)(total+totalnot))*100)+" %");
+		System.out.println("Time elapsed is "+(end-start)+" ms");
 	}
 
 	// This will draw the specified sudokuboard in the users terminal
@@ -137,7 +123,7 @@ public class Sudoku {
 			}
 			if(same){
 				//NakedPairs.nakedPairs(board);
-				/*
+				
 				for (int i =0; i<9 ;i++ ) {
 					
 					Hidden.hiddenCombi(board.getRow(i), board);
@@ -146,24 +132,10 @@ public class Sudoku {
 					Hidden.hiddenCombi(board.getColumn(i), board);
 					initBoard(board);
 					
-
-					Hidden.hiddenCombi(board.getBlock(i), board);
-					initBoard(board);
-				}*/
-				
-				
-				for (int i =0; i<9 ;i++ ) {
-					Hidden.hiddenCombi(board.getColumn(i), board);
-					initBoard(board);
-				}	
-				for (int i =0; i<9 ;i++ ) {
 					Hidden.hiddenCombi(board.getBlock(i), board);
 					initBoard(board);
 				}
-				for (int i =0; i<9 ;i++ ) {
-					Hidden.hiddenCombi(board.getRow(i), board);
-					initBoard(board);
-				}
+	
 				
 			}
 			//initBoard(board);
