@@ -7,28 +7,12 @@ public class Board {
 	private Entry[][] columns = new Entry[9][9];
 	private Entry[][] blocks = new Entry[9][9];
 
-	public static void main(String[] args) {
-		System.out.println(calcBlock(0,3));
-		/*
-		Board test = new Board();
-		test.setBoard(0,1,0,6);
-		Entry[] current = test.getBlock(0);
-		System.out.println(current[0].getOptions().get(5));
-		test.removeBoardOption(0,0,0,6);
-		System.out.println(current[0].getOptions().get(5));
-		
-		for(int j = 0; j < 9; j++ ){
-			System.out.println(test.blocks[3][j].getValue());
-		}
-		*/
-	} 
-
 	// Constructor that creates a sudokuBoard representation from String
 	public Board() {
 	}
 
 	// Constructor that creates a sudokuBoard representation from reading in
-	// the textfile easySudoku.txt
+	// the textfile 
 	public Board(BufferedReader sudokuReader) {
 		try {
 			int blockindex = 0;
@@ -37,10 +21,6 @@ public class Board {
 			int rowcount = 0;
 
 			String oneSudoku = sudokuReader.readLine();//This is one sudoku
-			/*while(oneSudoku != null){
-				sudokus.add(oneSudoku);
-				oneSudoku = sudokuReader.readLine();
-			}*/
 
 			//This adds all the objects to the row and column arrays
 			for(int i = 0; i < oneSudoku.length(); i++){

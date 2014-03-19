@@ -11,56 +11,8 @@ public class Hidden{
 	// If a hidden pair is found in blocks this will be false
 	public static boolean hpHidden = true;
 
-	public static void main(String[] args){
-		/*
-		for(int i = 0; i < 9; i++){
-			Entry object = new Entry(0);
-			test[i] = object;
-		}
-		test[0].setValue(7);
-		for(int i  = 1; i < 10; i++){
-			if(i != 2 && i != 3){
-				test[1].removeOption(i);
-			}
-		}
-		for(int i  = 1; i < 10; i++){
-			if(i != 2 && i != 3 && i != 5){
-				test[2].removeOption(i);
-			}
-		}
-		for(int i  = 1; i < 10; i++){
-			if(i != 1 && i != 2 && i != 5 && i!= 9){
-				test[3].removeOption(i);
-			}
-		}
-		test[4].setValue(8);
-		test[5].setValue(4);
-		for(int i  = 1; i < 10; i++){
-			if(i != 1 && i != 5 && i != 9){
-				test[6].removeOption(i);
-			}
-		}
-		test[7].setValue(6);
-		for(int i  = 1; i < 10; i++){
-			if(i != 5 && i != 3){
-				test[8].removeOption(i);
-			}
-		}
-		for(int i = 0; i < test[3].getOptions().size(); i++) {
-			System.out.println(test[3].getOptions().get(i));
-		}
-		hiddenPair(getFrequencies(test), test);
-		for(int i = 0; i < test[3].getOptions().size(); i++) {
-			System.out.println(test[3].getOptions().get(i));
-		}
-		*/
-	}
-
 	public static void hiddenCombi(Entry[] house, Board board){
-		hiddenSingle(getFrequencies(house), house);
-		Sudoku.initBoard(board);
-		//hiddenPair(getFrequencies(house), house, board);
-		//Sudoku.initBoard(board);
+		hiddenSingle(getFrequencies(house), house, board);
 	}
 
 	// Returns a table that contains the number of occurences for
@@ -93,7 +45,7 @@ public class Hidden{
 	}
 
 	// Looks for Hidden Singles in a house
-	public static void hiddenSingle(int[][] frequencyTable, Entry[] house){
+	public static void hiddenSingle(int[][] frequencyTable, Entry[] house, Board board){
 		// Loop through all the frequenties
 		for(int z = 0; z < 9; z++){
 			if(frequencyTable[z][1] == 1){
@@ -105,6 +57,7 @@ public class Hidden{
 							house[s].setValue(frequencyTable[z][0]);
 							Sudoku.same = false;
 							sameHidden = false;
+							Sudoku.initBoard(board);
 						}
 					}
 				}
@@ -167,6 +120,7 @@ public class Hidden{
 								k--;
 								Sudoku.same = false;
 								hpHidden = false;
+								Sudoku.initBoard(board);
 							}
 						}
 					}

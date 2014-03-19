@@ -44,14 +44,13 @@ public class Sudoku {
 		} catch (IOException e) {
 	        e.printStackTrace();
 	    }
-			/* drawing = new SudokuGraphics(9,9,test);	*/
 
 	    // The start time of our algorithm
 	    long start = System.currentTimeMillis();
 	 
 	 	// Tries to solve all the sudoku's  
 		for (int i = 0; i < total ;i++) {
-			System.out.println("This is sudoku number " + i);
+			//System.out.println("This is sudoku number " + i);
 			Board test = new Board(sudokuReader);
 			initBoard(test);
 			solve(test);
@@ -74,9 +73,7 @@ public class Sudoku {
 
 	// This will draw the specified sudokuboard in the users terminal
 	static void drawSudoku(int length, int width, Board board){
-		// drawing = new SudokuGraphics(length, width, board);
 		System.out.println("-------------");
-
 		// This loop draws a row per iteration
 		for(int i = 0; i < 9;i++){
 			Entry currentRow[] = board.getRow(i);
@@ -144,49 +141,35 @@ public class Sudoku {
 				Hidden.hpHidden = true;
 
 				// This calls the hidden single method on all thr rows, columns and blocks
-				for (int i =0; i<9 ;i++ ) {
+				for (int i = 0; i < 9 ;i++ ) {
 					Hidden.hiddenCombi(board.getRow(i), board);
-					initBoard(board);
 					
 					Hidden.hiddenCombi(board.getColumn(i), board);
-					initBoard(board);
 					
 					Hidden.hiddenCombi(board.getBlock(i), board);
-					initBoard(board);
 				}
-
 				for (int i =0; i<9 ;i++ ) {
-					NakedPairs.nakedPairs(board.getRow(i));
-					//initBoard(board);
+					NakedPairs.nakedPairs(board.getRow(i), board);
 				}
-				initBoard(board);
 				for (int i =0; i<9 ;i++ ) {					
-					NakedPairs.nakedPairs(board.getColumn(i));
-					//initBoard(board);
+					NakedPairs.nakedPairs(board.getColumn(i), board);
 				}
-				initBoard(board);
 				for (int i =0; i<9 ;i++ ) {					
-					NakedPairs.nakedPairs(board.getBlock(i));
-					//initBoard(board);
+					NakedPairs.nakedPairs(board.getBlock(i), board);
 				}
-				initBoard(board);
 				// If there isnt a hidden single found, hidden pair method is used
 				if (Hidden.sameHidden) {
 					for (int i =0; i < 9 ;i++ ) {
 						Hidden.hiddenPair(Hidden.getFrequencies(board.getBlock(i)), board.getBlock(i), board);
-						Sudoku.initBoard(board);
 					}
 
 					// If there is no hidden pair found in blocks, row and column will be checked
 					if(Hidden.hpHidden){
 						for (int i =0; i < 9 ;i++ ) {
 							Hidden.hiddenPair(Hidden.getFrequencies(board.getRow(i)), board.getRow(i), board);
-							Sudoku.initBoard(board);
 						}
-						
 						for (int i =0; i < 9 ;i++ ) {
 							Hidden.hiddenPair(Hidden.getFrequencies(board.getColumn(i)), board.getColumn(i), board);
-							Sudoku.initBoard(board);
 						}
 					}
 				}

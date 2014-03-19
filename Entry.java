@@ -6,34 +6,7 @@ public class Entry {
 	private int value = 0;
 
 	// Entry options (still) possible
-/* catch if options.size() == 0 */
 	private ArrayList<Integer> options = new ArrayList<Integer>();
-
-	// DONE TESTING
-	public static void main(String[] args)
-	{	
-		
-		Entry test = new Entry(0);
-		ArrayList options = test.getOptions();
-		for(int i = 0; i < options.size(); i++) {
-			System.out.println(options.get(i));
-		}
-		for(int i = 0; i < 9; i++) {
-			test.removeOption(i);
-		}
-		options = test.getOptions(); 
-		for(int i = 0; i < options.size(); i++) {
-			System.out.println(options.get(i));
-		}
-		// test.removeOption(4);
-		//System.out.println(test.options.get(4));
-		System.out.println(test.getValue());
-		//System.out.println(test.getBlock());
-		test.checkOptions();
-		System.out.println(test.getValue());
-
-		
-	}
 
 	// The constructor for creating a sudoku Entry
 	public Entry(int value)
@@ -85,28 +58,8 @@ public class Entry {
 			if(number == options.get(i)){
 				options.remove(i);
 				return false;
-				/*
-				for(int j = 0; j<options.size(); j++) {
-					System.out.print(" " + options.get(j));
-				}
-				System.out.println("");*/
-				//break;
 			}
 		}
-
-		/*
-		// If there is only one option left, it must be the value of the Entry
-		if(options.size() == 1){
-			this.value = options.get(0);
-			return false;
-			/*
-			System.out.println("CHANGE!!!!!");
-			System.out.println("Set to value " + options.get(0));
-			System.out.println("size of options is " + options.size());*/
-			/*
-			for(int k = 0; k<options.size(); k++) {
-				System.out.println(options.get(k));
-			}*/
 		return true;		
 	}
 
@@ -121,20 +74,3 @@ public class Entry {
 		}
 	}
 }
-
-/*
-	// Returns the block
-	public int getBlock()
-	{
-		if(block == 0) {
-			System.out.println("No block has been found");
-			return 0;
-		} else {
-			return this.block;
-		}
-	}
-
-	public void setBlock(){
-		this.block = block;
-	}
-*/	
