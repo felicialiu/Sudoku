@@ -61,16 +61,16 @@ public class NakedPairs {
 				test[8].removeOption(i);
 			}
 		}
-		System.out.println("Options in oneth cell are " + test[1].getOptions());
+		//System.out.println("Options in oneth cell are " + test[1].getOptions());
 		nakedPairs(test);
-		System.out.println("Options in oneth cell are " + test[1].getOptions());
+		//System.out.println("Options in oneth cell are " + test[1].getOptions());
 
 	}
 	
 	// Correctly initialises the possible options for all cells 
 	public static void nakedPairs(Entry[] house) {	
 		// Loop through the 9 entries that a house contains
-		for(int index = 0; index < 9; index++) {
+		//for(int index = 0; index < 9; index++) {
 			// Array that holds possible pairs and their location in a house.
 			// Each element in the array is another array that contains a 
 			// possible pair and the location of that pair 
@@ -96,27 +96,30 @@ public class NakedPairs {
 					// Naked Pair!!!!
 					// Get locations of that pair and save in array locations
 					ArrayList<Integer> locations = getPairLocations(possiblePairs.get(i).get(0), possiblePairs);
-					for(int j = 0; j < 2; j++) {
+					//for(int j = 0; j < 2; j++) {
 						for(int k = 0; k < 9; k++) {
 							if(!locations.contains(k)) {
-								house[k].removeOption(possiblePairs.get(i).get(0).get(j));
+								//if (possiblePairs.get(i).get(0).size() == 2) {
+									house[k].removeOption(possiblePairs.get(i).get(0).get(0));
+									//house[k].removeOption(possiblePairs.get(i).get(0).get(1));
+								//}
 							}
 						}
-					}
+					//}
 				}
 			}
-		}
+		//}
 	}
 
 	// Returns a list with the two locations at which the naked pair can be found
 	private static ArrayList<Integer> getPairLocations(ArrayList<Integer> pair, ArrayList<ArrayList<ArrayList<Integer>>> possiblePairs) {
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < possiblePairs.size(); i++) {
-			System.out.println("Index i is at " + i);
-			System.out.println("Is the given pair equal to " + possiblePairs.get(i).get(0));
+			//System.out.println("Index i is at " + i);
+			//System.out.println("Is the given pair equal to " + possiblePairs.get(i).get(0));
 			if(equalPair(pair, possiblePairs.get(i).get(0))) {
 				locations.add(possiblePairs.get(i).get(1).get(0));
-				System.out.println("added!");
+				//System.out.println("added!");
 			}
 		}
 		return locations;
@@ -138,12 +141,17 @@ public class NakedPairs {
 	// Returns true if the two pairs of integers (ArrayList of size 2) are
 	// equal to each other
 	private static boolean equalPair(ArrayList<Integer> pair1, ArrayList<Integer> pair2) {
-		for(int i = 0; i < pair1.size(); i++) {
-			if(pair1.get(i) != pair2.get(i)) {
-				return false;
+		if(pair1.size() == pair2.size()){
+			for(int i = 0; i < pair1.size(); i++) {
+				if(pair1.get(i) != pair2.get(i)) {
+					return false;
+				}
 			}
+			return true;
+		}else{
+			return false;
 		}
-		return true;
+		
 	}
 }
 
