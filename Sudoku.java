@@ -51,6 +51,7 @@ public class Sudoku {
 	 
 	 	// Tries to solve all the sudoku's  
 		for (int i = 0; i < total ;i++) {
+			System.out.println("This is sudoku number " + i);
 			Board test = new Board(sudokuReader);
 			initBoard(test);
 			solve(test);
@@ -156,15 +157,19 @@ public class Sudoku {
 
 				for (int i =0; i<9 ;i++ ) {
 					NakedPairs.nakedPairs(board.getRow(i));
-					initBoard(board);
-					
-					NakedPairs.nakedPairs(board.getColumn(i));
-					initBoard(board);
-					
-					NakedPairs.nakedPairs(board.getBlock(i));
-					initBoard(board);
+					//initBoard(board);
 				}
-
+				initBoard(board);
+				for (int i =0; i<9 ;i++ ) {					
+					NakedPairs.nakedPairs(board.getColumn(i));
+					//initBoard(board);
+				}
+				initBoard(board);
+				for (int i =0; i<9 ;i++ ) {					
+					NakedPairs.nakedPairs(board.getBlock(i));
+					//initBoard(board);
+				}
+				initBoard(board);
 				// If there isnt a hidden single found, hidden pair method is used
 				if (Hidden.sameHidden) {
 					for (int i =0; i < 9 ;i++ ) {
@@ -236,7 +241,7 @@ public class Sudoku {
 						board.removeBoardOption(rowIndex, columnIndex,
 							0, currentBlock[i].getValue());
 					}
-					// Assigns the value if only option is left
+					// Assigns the value if only one option is left
 					Entry currentCell = board.getRows()[rowIndex][columnIndex];
 					if(currentCell.assignValue()) {
 						board.removeOptionComplete(rowIndex, columnIndex, blockIndex, currentCell.getValue());

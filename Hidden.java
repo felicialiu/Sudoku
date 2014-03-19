@@ -146,7 +146,7 @@ public class Hidden{
 				// This loops through one house
 				for(int p = 0; p < 9; p++){
 					// If both numbers of the permutation are in the specified house position, a pair is found
-					if(house[p].getOptions().contains(permutations.get(l).get(0))
+					if(house[p].getValue() == 0 && house[p].getOptions().contains(permutations.get(l).get(0))
 										&& house[p].getOptions().contains(permutations.get(l).get(1))){
 						hpCount++;
 						hpPosition.add(p);
@@ -162,7 +162,7 @@ public class Hidden{
 						// This loops through all the options of a specified house position
 						for (int k = 0; k < hpOptions.size(); k++) {
 							// If the option does not equal the pair, the option is removed
-							if(permutations.get(l).get(0) != hpOptions.get(k) && permutations.get(l).get(1) != hpOptions.get(k)){
+							if(house[hpPosition.get(t)].getValue() == 0 && permutations.get(l).get(0) != hpOptions.get(k) && permutations.get(l).get(1) != hpOptions.get(k)){
 								house[hpPosition.get(t)].removeOption(hpOptions.get(k));
 								k--;
 								Sudoku.same = false;

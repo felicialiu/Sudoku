@@ -79,7 +79,8 @@ public class NakedPairs {
 			// Loop through each element in the 3 houses and add the options of
 			// a cell with its index to the array containing all the options
 			for(int i = 0; i < 9; i++) {
-				if(house[i].getOptions().size() == 2) {
+				if(house[i].getValue() != 0 && house[i].getOptions().size() == 2) {
+					System.out.println(house[i].getOptions().size());
 					// Array to contain the pair and index
 					ArrayList<ArrayList<Integer>> pairIndex = new ArrayList<ArrayList<Integer>>();
 					// Array to contain the index of the found pair
@@ -96,12 +97,16 @@ public class NakedPairs {
 					// Naked Pair!!!!
 					// Get locations of that pair and save in array locations
 					ArrayList<Integer> locations = getPairLocations(possiblePairs.get(i).get(0), possiblePairs);
+					if(possiblePairs.get(i).get(0).size() != 2) {
+						System.out.println("Pair found not size 2!");
+						System.out.println(possiblePairs.get(i).get(0));
+					}
 					//for(int j = 0; j < 2; j++) {
 						for(int k = 0; k < 9; k++) {
 							if(!locations.contains(k)) {
 								//if (possiblePairs.get(i).get(0).size() == 2) {
 									house[k].removeOption(possiblePairs.get(i).get(0).get(0));
-									//house[k].removeOption(possiblePairs.get(i).get(0).get(1));
+									house[k].removeOption(possiblePairs.get(i).get(0).get(1));
 								//}
 							}
 						}
@@ -117,7 +122,8 @@ public class NakedPairs {
 		for(int i = 0; i < possiblePairs.size(); i++) {
 			//System.out.println("Index i is at " + i);
 			//System.out.println("Is the given pair equal to " + possiblePairs.get(i).get(0));
-			if(equalPair(pair, possiblePairs.get(i).get(0))) {
+			if(equalPair(pair, possiblePairs.get(i).get(0)) && possiblePairs.get(i).get(0).size() == 2) {
+				System.out.println("Pair is in table " + possiblePairs.get(i).get(0) + " and its size is " + possiblePairs.get(i).get(0).size());
 				locations.add(possiblePairs.get(i).get(1).get(0));
 				//System.out.println("added!");
 			}
@@ -138,7 +144,7 @@ public class NakedPairs {
 		return occurences;
 	}
 
-	// Returns true if the two pairs of integers (ArrayList of size 2) are
+	// Returns true if the two pairs of integers (ArrayLists of size 2) are
 	// equal to each other
 	private static boolean equalPair(ArrayList<Integer> pair1, ArrayList<Integer> pair2) {
 		if(pair1.size() == pair2.size()){
@@ -148,10 +154,9 @@ public class NakedPairs {
 				}
 			}
 			return true;
-		}else{
+		} else {
 			return false;
-		}
-		
+		}		
 	}
 }
 
