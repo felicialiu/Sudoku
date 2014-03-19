@@ -24,20 +24,23 @@ public class Board {
 	} 
 
 	// Constructor that creates a sudokuBoard representation from String
-	public Board(String sudoku) {
-		/* do something */
+	public Board() {
 	}
 
 	// Constructor that creates a sudokuBoard representation from reading in
 	// the textfile easySudoku.txt
-	public Board() {
+	public Board(BufferedReader sudokuReader) {
 		try {
 			int blockindex = 0;
 			int block = 0;
 			int count = 0;
 			int rowcount = 0;
-			BufferedReader sudokuReader = new BufferedReader(new FileReader("easySudoku.txt"));
+
 			String oneSudoku = sudokuReader.readLine();//This is one sudoku
+			/*while(oneSudoku != null){
+				sudokus.add(oneSudoku);
+				oneSudoku = sudokuReader.readLine();
+			}*/
 
 			//This adds all the objects to the row and column arrays
 			for(int i = 0; i < oneSudoku.length(); i++){
@@ -92,14 +95,6 @@ public class Board {
 	public void setBoard(int row, int column, int block, int newValue) {
 		// Set row value 
 		rows[row][column].setValue(newValue);
-		/*
-		// Set column value 
-		columns[column][row].setValue(newValue);
-
-		// Set block value 
-		int index = calcBlockIndex(row, column);
-		blocks[block][index].setValue(newValue);
-		*/
 	}
 
 	// Removes an option from all the Entries in the same row/column/block
@@ -116,14 +111,6 @@ public class Board {
 	public boolean removeBoardOption(int row, int column, int block, int option){
 		// Removes row option 
 		return rows[row][column].removeOption(option);
-		/*
-		// Removes column option 
-		columns[column][row].removeOption(option);
-
-		// Removes block option 
-		int index = calcBlockIndex(row, column);
-		blocks[block][index].removeOption(option);
-		*/
 	}
 
 	// Returns the row representation of the sudoku
