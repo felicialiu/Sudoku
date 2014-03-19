@@ -7,25 +7,46 @@ public class Sudoku {
 
 	public static boolean same = false;
 
+	private static boolean solved;
+
+	private static BufferedReader sudokuReader;
+
 	/* alle sudoku's inlezen en totaalscore printen */
 
 	public static void main(String[] args)
 	{
-		
-		Board test = new Board();
-		/*
-		drawing = new SudokuGraphics(9,9,test);
-		hiddenpair(test.getBlock(0));
-		*/
+		int total = 0;
+		int totalnot = 0;
+		try{
+			sudokuReader = new BufferedReader(new FileReader("subig20.txt"));
+		} catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		for (int i = 0; i < 100 ;i++) {
+			Board test = new Board(sudokuReader);
+			/*
+			drawing = new SudokuGraphics(9,9,test);
+			hiddenpair(test.getBlock(0));
+			*/
 
-		System.out.println("Loaded board!");
-		drawSudoku(9,9, test);
-		initBoard(test);
-		System.out.println("Initialized board");
-		drawSudoku(9,9, test);
-		solve(test);
-		System.out.println("solved board");
-		drawSudoku(9,9, test);
+			//System.out.println("Loaded board!");
+			//drawSudoku(9,9, test);
+			initBoard(test);
+			//System.out.println("Initialized board");
+			//drawSudoku(9,9, test);
+			solve(test);
+			//System.out.println("solved board");
+			//drawSudoku(9,9, test);
+			//System.out.println("Sudoku "+i+" solved is "+solved);
+			if(solved == true){
+				total++;
+				drawSudoku(9,9,test);
+			}else{
+				totalnot++;
+			}
+		}
+		System.out.println("total solved "+total);
+		System.out.println("total not solved "+totalnot);
 		/*
 		for (int i =0; i<9 ;i++ ) {
 			Hidden.hiddenpair(test.getColumn(i));	
@@ -69,53 +90,10 @@ public class Sudoku {
 		System.out.println("-------------");
 	}
 
-/*
-			// Current row and column
-			Entry[] currentRow = board.getRow(rowCount);
-			Entry[] currentColumn = board.getColumn(columnCount);
-
-			
-			for(int i = 0; i < 9; i++){
-				// Single
-				if(currentRow[i].checkOptions()) {
-					changed = true;
-					// remove from row/column/block
-				}
-				if (currentColumn[i].checkOptions()) {
-					changed = true;
-				}
-
-
-
-
-				
-				// Removes a specific value from "options" from an Entry if
-				// that value has been found in the same row
-				if(currentRow[i].getValue() != 0){
-					board.removeBoardOption(rowCount, columnCount, 
-											0, currentRow[i].getValue());
-				}
-
-				// Does the same for an Entry in a column
-				if(currentColumn[i].getValue() != 0){
-					board.removeBoardOption(rowCount, columnCount,
-											0, currentColumn[i].getValue());
-				}
-
-				// MISSING: removing values from options of a block 
-
-			}
-			columnCount++;
-		}
-		solved = board.checkBoard(board);
-	}
-}
-*/
-
 	// This is the solve method which solves the specified sudoku
 	static void solve(Board board){
 		// Checks whether the sudoku has been solved
-		boolean solved = board.checkBoard(board);
+		solved = board.checkBoard(board);
 
 		// Checks whether sudoku has been adjusted
 		boolean temp;
@@ -153,54 +131,15 @@ public class Sudoku {
 						//System.out.println("The value was " + currentCell.getValue());
 						board.removeOptionComplete(rowIndex, columnIndex, blockIndex, currentCell.getValue());
 						same = false;
-						/*
-						// Checks if there are any values in the row or column that can be 
-						// removed from the options of the current object 
-						for(int i = 0; i < 9; i++){
-
-							// Removes a specific value from "options" from an Entry if
-							// that value has been found in the same row
-							if(currentRow[i].getValue() != 0){
-								temp = board.removeBoardOption(rowIndex, columnIndex, 
-														0, currentRow[i].getValue());
-								// if(board.assignValue(rowIndex, columIndex)) {
-								// removeFromAll(rowIndex)
-								// }
-								if(same) {
-									same = temp;
-								}
-								// System.out.println("ROW at ["+rowIndex+","+columnIndex+"], value " + currentRow[i].getValue());
-							}
-
-							// Does the same for an Entry in a column
-							if(currentColumn[i].getValue() != 0){
-								temp = board.removeBoardOption(rowIndex, columnIndex,
-													0, currentColumn[i].getValue());
-								if(same) {
-									same = temp;
-								}
-								// System.out.println("COLUMN at ["+rowIndex+","+columnIndex+"], value " + currentColumn[i].getValue());
-
-							}
-							// Does the same for an Entry in a block
-							if(currentBlock[i].getValue() != 0) {
-								temp = board.removeBoardOption(rowIndex, columnIndex,
-									0, currentBlock[i].getValue());
-								if(same) {
-									same = temp;
-								}
-							}
-						}
-						*/
 					}
 				}
 				columnIndex++;
 			}
 			if(same){
-				NakedPairs.nakedPairs(board);
+				//NakedPairs.nakedPairs(board);
 				/*
 				for (int i =0; i<9 ;i++ ) {
-					/*
+					
 					Hidden.hiddenCombi(board.getRow(i), board);
 					initBoard(board);
 					
@@ -210,10 +149,9 @@ public class Sudoku {
 
 					Hidden.hiddenCombi(board.getBlock(i), board);
 					initBoard(board);
-					/*
-
-				}
-				/*
+				}*/
+				
+				
 				for (int i =0; i<9 ;i++ ) {
 					Hidden.hiddenCombi(board.getColumn(i), board);
 					initBoard(board);
@@ -221,10 +159,14 @@ public class Sudoku {
 				for (int i =0; i<9 ;i++ ) {
 					Hidden.hiddenCombi(board.getBlock(i), board);
 					initBoard(board);
-				
-				}*/
+				}
+				for (int i =0; i<9 ;i++ ) {
+					Hidden.hiddenCombi(board.getRow(i), board);
+					initBoard(board);
+				}
 				
 			}
+			//initBoard(board);
 			solved = board.checkBoard(board);
 		}
 	}
@@ -276,6 +218,13 @@ public class Sudoku {
 					if(currentBlock[i].getValue() != 0) {
 						board.removeBoardOption(rowIndex, columnIndex,
 							0, currentBlock[i].getValue());
+					}
+					Entry currentCell = board.getRows()[rowIndex][columnIndex];
+					if(currentCell.assignValue()) {
+						//System.out.println("I assigned a value!");
+						//System.out.println("The value was " + currentCell.getValue());
+						board.removeOptionComplete(rowIndex, columnIndex, blockIndex, currentCell.getValue());
+						same = false;
 					}
 				}
 			}
