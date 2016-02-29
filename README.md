@@ -1,4 +1,8 @@
-Sudoku
+SudokuSolver
 ======
 
-Project sudoku by felicia and jonas
+Project Sudoku by Felicia Liu and Jonas van Oenen
+
+University of Amsterdam
+Artificial Intelligence
+Data Structures
